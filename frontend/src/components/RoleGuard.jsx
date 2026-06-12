@@ -31,6 +31,8 @@ export const RoleGuard = ({ children, allowedRoles }) => {
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     if (user.role === 'mentor') {
       return <Navigate to="/mentor-dashboard" replace />;
+    } else if (user.role === 'admin') {
+      return <Navigate to="/admin/dashboard" replace />;
     } else {
       return <Navigate to="/mentee-dashboard" replace />;
     }
@@ -51,6 +53,8 @@ export const GuestGuard = ({ children }) => {
   if (user) {
     if (user.role === 'mentor') {
       return <Navigate to="/mentor-dashboard" replace />;
+    } else if (user.role === 'admin') {
+      return <Navigate to="/admin/dashboard" replace />;
     } else if (user.role === 'mentee') {
       return <Navigate to="/mentee-dashboard" replace />;
     }

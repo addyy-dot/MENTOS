@@ -26,7 +26,7 @@ const register = async (req, res) => {
     }
 
     if (role !== 'mentor' && role !== 'mentee') {
-      return res.status(400).json({ message: 'Role must be either mentor or mentee.' });
+      return res.status(400).json({ message: 'Role must be either mentor or mentee. Admin accounts cannot be created via registration.' });
     }
 
     // Check if email already exists

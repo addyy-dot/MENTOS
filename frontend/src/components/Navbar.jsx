@@ -74,6 +74,15 @@ const Navbar = () => {
                       <FileText className="w-4 h-4" /> My Requests
                     </Link>
                   </>
+                ) : user.role === 'admin' ? (
+                  <>
+                    <Link to="/admin/dashboard" className={linkClass('/admin/dashboard')}>
+                      <LayoutDashboard className="w-4 h-4" /> Admin Dashboard
+                    </Link>
+                    <Link to="/admin/users" className={linkClass('/admin/users')}>
+                      <FileText className="w-4 h-4" /> Manage Users
+                    </Link>
+                  </>
                 ) : (
                   <>
                     <Link to="/mentor-dashboard" className={linkClass('/mentor-dashboard')}>
@@ -85,9 +94,11 @@ const Navbar = () => {
                   </>
                 )}
                 
-                <Link to="/profile/edit" className={linkClass('/profile/edit')}>
-                  <Settings className="w-4 h-4" /> Edit Profile
-                </Link>
+                {user.role !== 'admin' && (
+                  <Link to="/profile/edit" className={linkClass('/profile/edit')}>
+                    <Settings className="w-4 h-4" /> Edit Profile
+                  </Link>
+                )}
 
                 <div className="h-6 w-[1px] bg-slate-200 mx-2"></div>
 
@@ -162,6 +173,15 @@ const Navbar = () => {
                     <FileText className="w-5 h-5 mr-1" /> My Requests
                   </Link>
                 </>
+              ) : user.role === 'admin' ? (
+                <>
+                  <Link to="/admin/dashboard" onClick={() => setIsOpen(false)} className={mobileLinkClass('/admin/dashboard')}>
+                    <LayoutDashboard className="w-5 h-5 mr-1" /> Admin Dashboard
+                  </Link>
+                  <Link to="/admin/users" onClick={() => setIsOpen(false)} className={mobileLinkClass('/admin/users')}>
+                    <FileText className="w-5 h-5 mr-1" /> Manage Users
+                  </Link>
+                </>
               ) : (
                 <>
                   <Link to="/mentor-dashboard" onClick={() => setIsOpen(false)} className={mobileLinkClass('/mentor-dashboard')}>
@@ -173,9 +193,11 @@ const Navbar = () => {
                 </>
               )}
               
-              <Link to="/profile/edit" onClick={() => setIsOpen(false)} className={mobileLinkClass('/profile/edit')}>
-                <Settings className="w-5 h-5 mr-1" /> Edit Profile
-              </Link>
+              {user.role !== 'admin' && (
+                <Link to="/profile/edit" onClick={() => setIsOpen(false)} className={mobileLinkClass('/profile/edit')}>
+                  <Settings className="w-5 h-5 mr-1" /> Edit Profile
+                </Link>
+              )}
 
               <button
                 onClick={handleLogout}

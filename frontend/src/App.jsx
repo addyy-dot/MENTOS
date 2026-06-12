@@ -20,6 +20,8 @@ import Feedback from './pages/Feedback';
 import MentorDashboard from './pages/MentorDashboard';
 import IncomingRequests from './pages/IncomingRequests';
 import ScheduleSession from './pages/ScheduleSession';
+import AdminDashboard from './pages/AdminDashboard';
+import ManageUsers from './pages/ManageUsers';
 
 function App() {
   return (
@@ -130,6 +132,24 @@ function App() {
                   element={
                     <RoleGuard allowedRoles={['mentor']}>
                       <ScheduleSession />
+                    </RoleGuard>
+                  }
+                />
+
+                {/* Admin Protected Routes */}
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <RoleGuard allowedRoles={['admin']}>
+                      <AdminDashboard />
+                    </RoleGuard>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <RoleGuard allowedRoles={['admin']}>
+                      <ManageUsers />
                     </RoleGuard>
                   }
                 />

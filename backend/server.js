@@ -2,12 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const { seedAdmin } = require('./seeders/adminSeeder');
 
 // Load env variables
 dotenv.config();
 
 // Connect to Database
 connectDB();
+
+// Seed default admin account
+seedAdmin();
 
 const app = express();
 
@@ -25,6 +29,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/mentors', require('./routes/mentorRoutes'));
 app.use('/api/requests', require('./routes/requestRoutes'));
 app.use('/api/feedback', require('./routes/feedbackRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Health Check API
 app.get('/', (req, res) => {
