@@ -83,7 +83,7 @@ const Home = () => {
               Find Mentors <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              to="/register"
+              to="/register?role=mentor"
               className="w-full sm:w-auto px-6 py-3 bg-[#1E293B] border border-slate-750 hover:bg-slate-800 text-slate-300 font-semibold rounded-lg shadow-sm transition-all duration-200 flex items-center justify-center"
             >
               Become a Mentor

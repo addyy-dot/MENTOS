@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { Mail, Lock, User, UserCheck, Eye, EyeOff, Briefcase, Award } from 'lucide-react';
@@ -9,12 +9,14 @@ const Register = () => {
   const { register } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialRole = searchParams.get('role') === 'mentor' ? 'mentor' : 'mentee';
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState('mentee'); // default mentee
+  const [role, setRole] = useState(initialRole);
   const [currentCompany, setCurrentCompany] = useState('');
   const [currentRole, setCurrentRole] = useState('');
   const [submitting, setSubmitting] = useState(false);
