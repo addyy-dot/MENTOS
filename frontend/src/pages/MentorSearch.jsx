@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useToast } from '../context/ToastContext';
-import { Search, SlidersHorizontal, Star, Briefcase, Award, GraduationCap, X } from 'lucide-react';
+import { Search, SlidersHorizontal, Star, Briefcase, Award, GraduationCap, X, CheckCircle } from 'lucide-react';
 
 const MentorSearch = () => {
   const { showToast } = useToast();
@@ -14,6 +14,8 @@ const MentorSearch = () => {
   const [skill, setSkill] = useState('');
   const [company, setCompany] = useState('');
   const [expertise, setExpertise] = useState('');
+  const [currentRole, setCurrentRole] = useState('');
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const fetchMentors = async () => {
@@ -24,6 +26,8 @@ const MentorSearch = () => {
       if (skill) params.skill = skill;
       if (company) params.company = company;
       if (expertise) params.expertise = expertise;
+      if (currentRole) params.currentRole = currentRole;
+      if (verifiedOnly) params.verifiedOnly = 'true';
 
       const response = await api.get('/api/mentors', { params });
       setMentors(response.data.mentors);
@@ -33,6 +37,30 @@ const MentorSearch = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleVerifiedToggle = (checked) => {
+    setVerifiedOnly(checked);
+    setLoading(true);
+    const params = {};
+    if (search) params.search = search;
+    if (skill) params.skill = skill;
+    if (company) params.company = company;
+    if (expertise) params.expertise = expertise;
+    if (currentRole) params.currentRole = currentRole;
+    if (checked) params.verifiedOnly = 'true';
+
+    api.get('/api/mentors', { params })
+      .then((res) => {
+        setMentors(res.data.mentors);
+      })
+      .catch((error) => {
+        console.error('Error fetching mentors:', error);
+        showToast('Failed to fetch mentors list.', 'error');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -50,6 +78,8 @@ const MentorSearch = () => {
     setSkill('');
     setCompany('');
     setExpertise('');
+    setCurrentRole('');
+    setVerifiedOnly(false);
     // We cannot immediately query since states don't update synchronously, 
     // so we trigger query inside a temporary fetch call.
     setTimeout(() => {
@@ -111,6 +141,20 @@ const MentorSearch = () => {
               />
             </div>
 
+            {/* Role Filter */}
+            <div>
+              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
+                By Job Role / Designation
+              </label>
+              <input
+                type="text"
+                value={currentRole}
+                onChange={(e) => setCurrentRole(e.target.value)}
+                placeholder="e.g. Software Engineer"
+                className="w-full px-4 py-2.5 bg-[#111827] border border-slate-700 rounded-xl text-xs font-semibold text-slate-200 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:bg-[#111827]"
+              />
+            </div>
+
             {/* Expertise Filter */}
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
@@ -123,6 +167,19 @@ const MentorSearch = () => {
                 placeholder="e.g. Frontend, System Design"
                 className="w-full px-4 py-2.5 bg-[#111827] border border-slate-700 rounded-xl text-xs font-semibold text-slate-200 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:bg-[#111827]"
               />
+            </div>
+
+            {/* Verification Status Filter */}
+            <div className="pt-2 border-t border-slate-800">
+              <label className="flex items-center gap-2 cursor-pointer text-slate-350 hover:text-white transition-colors">
+                <input
+                  type="checkbox"
+                  checked={verifiedOnly}
+                  onChange={(e) => handleVerifiedToggle(e.target.checked)}
+                  className="rounded border-slate-700 bg-[#111827] text-blue-600 focus:ring-blue-500 focus:ring-offset-[#1E293B] cursor-pointer"
+                />
+                <span className="text-xs font-semibold select-none">Verified Mentors Only</span>
+              </label>
             </div>
 
             <button
@@ -198,10 +255,17 @@ const MentorSearch = () => {
                           {mentor.fullName.charAt(0)}
                         </div>
                         <div>
-                          <h3 className="text-base font-bold text-slate-205 leading-snug hover:text-blue-400">
-                            <Link to={`/mentor/${mentor._id}`}>{mentor.fullName}</Link>
-                          </h3>
-                          <p className="text-xs text-slate-450 font-semibold">{mentor.branch}</p>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-base font-bold text-slate-205 leading-snug hover:text-blue-400">
+                              <Link to={`/mentor/${mentor._id}`}>{mentor.fullName}</Link>
+                            </h3>
+                            {mentor.isVerified && (
+                              <span className="inline-flex items-center gap-1 text-emerald-500 text-xs font-bold shrink-0">
+                                <CheckCircle className="w-3.5 h-3.5" /> Verified Mentor
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-450 font-semibold mt-0.5">{mentor.branch}</p>
                           {(mentor.currentRole || mentor.currentCompany) && (
                             <p className="text-xs text-blue-400 font-bold mt-1">
                               {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
@@ -318,6 +382,20 @@ const MentorSearch = () => {
                   />
                 </div>
 
+                {/* Role Filter */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1.5">
+                    By Job Role / Designation
+                  </label>
+                  <input
+                    type="text"
+                    value={currentRole}
+                    onChange={(e) => setCurrentRole(e.target.value)}
+                    placeholder="e.g. Software Engineer"
+                    className="w-full px-4 py-2.5 bg-[#111827] border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl"
+                  />
+                </div>
+
                 {/* Expertise Filter */}
                 <div>
                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1.5">
@@ -330,6 +408,19 @@ const MentorSearch = () => {
                     placeholder="e.g. Frontend"
                     className="w-full px-4 py-2.5 bg-[#111827] border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl"
                   />
+                </div>
+
+                {/* Verification Status Filter */}
+                <div className="pt-4 border-t border-slate-800">
+                  <label className="flex items-center gap-2 cursor-pointer text-slate-350 hover:text-white transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={verifiedOnly}
+                      onChange={(e) => setVerifiedOnly(e.target.checked)}
+                      className="rounded border-slate-700 bg-[#111827] text-blue-600 focus:ring-blue-500 focus:ring-offset-[#1E293B] cursor-pointer"
+                    />
+                    <span className="text-xs font-semibold select-none">Verified Mentors Only</span>
+                  </label>
                 </div>
               </div>
             </div>

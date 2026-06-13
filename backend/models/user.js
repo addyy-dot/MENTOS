@@ -70,6 +70,19 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  linkedinProfile: {
+    type: String,
+    default: '',
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationStatus: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  },
 }, {
   timestamps: true,
 });

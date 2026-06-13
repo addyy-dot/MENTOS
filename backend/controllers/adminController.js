@@ -98,8 +98,78 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// Get pending mentor verification requests
+const getPendingVerifications = async (req, res) => {
+  try {
+    const mentors = await User.find({ role: 'mentor', verificationStatus: 'pending' })
+      .select('-passwordHash')
+      .sort({ createdAt: -1 });
+
+    res.json({
+      count: mentors.length,
+      mentors,
+    });
+  } catch (error) {
+    console.error('Error fetching pending verifications:', error);
+    res.status(500).json({ message: 'Error fetching pending verifications.', error: error.message });
+  }
+};
+
+// Approve a mentor
+const approveMentor = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const mentor = await User.findOneAndUpdate(
+      { _id: id, role: 'mentor' },
+      { isVerified: true, verificationStatus: 'approved' },
+      { new: true }
+    ).select('-passwordHash');
+
+    if (!mentor) {
+      return res.status(404).json({ message: 'Mentor not found.' });
+    }
+
+    res.json({
+      message: 'Mentor verified successfully.',
+      mentor,
+    });
+  } catch (error) {
+    console.error('Error approving mentor:', error);
+    res.status(500).json({ message: 'Error approving mentor.', error: error.message });
+  }
+};
+
+// Reject a mentor
+const rejectMentor = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const mentor = await User.findOneAndUpdate(
+      { _id: id, role: 'mentor' },
+      { isVerified: false, verificationStatus: 'rejected' },
+      { new: true }
+    ).select('-passwordHash');
+
+    if (!mentor) {
+      return res.status(404).json({ message: 'Mentor not found.' });
+    }
+
+    res.json({
+      message: 'Mentor verification rejected.',
+      mentor,
+    });
+  } catch (error) {
+    console.error('Error rejecting mentor:', error);
+    res.status(500).json({ message: 'Error rejecting mentor.', error: error.message });
+  }
+};
+
 module.exports = {
   getStats,
   getUsers,
   deleteUser,
+  getPendingVerifications,
+  approveMentor,
+  rejectMentor,
 };

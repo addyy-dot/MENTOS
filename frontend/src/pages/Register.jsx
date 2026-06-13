@@ -3,6 +3,23 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { Mail, Lock, User, UserCheck, Eye, EyeOff, Briefcase, Award } from 'lucide-react';
+
+const Linkedin = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 import Logo from '../components/Logo';
 
 const Register = () => {
@@ -19,6 +36,7 @@ const Register = () => {
   const [role, setRole] = useState(initialRole);
   const [currentCompany, setCurrentCompany] = useState('');
   const [currentRole, setCurrentRole] = useState('');
+  const [linkedinProfile, setLinkedinProfile] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -28,8 +46,8 @@ const Register = () => {
       return;
     }
 
-    if (role === 'mentor' && (!currentCompany || !currentRole)) {
-      showToast('Please enter your current company and designation.', 'error');
+    if (role === 'mentor' && (!currentCompany || !currentRole || !linkedinProfile)) {
+      showToast('Please enter your current company, designation, and LinkedIn profile URL.', 'error');
       return;
     }
 
@@ -45,12 +63,17 @@ const Register = () => {
       password,
       role,
       currentCompany: role === 'mentor' ? currentCompany : '',
-      currentRole: role === 'mentor' ? currentRole : ''
+      currentRole: role === 'mentor' ? currentRole : '',
+      linkedinProfile: role === 'mentor' ? linkedinProfile : ''
     });
     setSubmitting(false);
 
     if (result.success) {
-      showToast('Account registered successfully! Welcome to MENTos.', 'success');
+      if (role === 'mentor') {
+        showToast('Your mentor profile has been submitted for verification. An administrator will review your profile before you receive the Verified Mentor badge.', 'success', 8000);
+      } else {
+        showToast('Account registered successfully! Welcome to MENTos.', 'success');
+      }
       navigate('/');
     } else {
       showToast(result.message || 'Registration failed.', 'error');
@@ -175,7 +198,26 @@ const Register = () => {
                       value={currentRole}
                       onChange={(e) => setCurrentRole(e.target.value)}
                       placeholder="Enter your Job role"
-                      className="w-full pl-9 pr-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                      className="w-full pl-9 pr-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                      required={role === 'mentor'}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+                    LinkedIn Profile URL
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                      <Linkedin className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="url"
+                      value={linkedinProfile}
+                      onChange={(e) => setLinkedinProfile(e.target.value)}
+                      placeholder="https://linkedin.com/in/username"
+                      className="w-full pl-9 pr-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                       required={role === 'mentor'}
                     />
                   </div>

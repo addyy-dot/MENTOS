@@ -3,33 +3,61 @@ const User = require('../models/user');
 // Get all mentors with search and filter capabilities
 const getMentors = async (req, res) => {
   try {
-    const { search, skill, company, expertise } = req.query;
+    const { search, skill, company, expertise, verifiedOnly, currentRole } = req.query;
     
     // Base query only fetches mentors
     let query = { role: 'mentor' };
+    let conditions = [];
+
+    // Filter by verification status if requested
+    if (verifiedOnly === 'true') {
+      query.isVerified = true;
+    }
 
     // Apply search filter (name, bio, branch)
     if (search) {
-      query.$or = [
-        { fullName: { $regex: search, $options: 'i' } },
-        { bio: { $regex: search, $options: 'i' } },
-        { branch: { $regex: search, $options: 'i' } },
-      ];
+      conditions.push({
+        $or: [
+          { fullName: { $regex: search, $options: 'i' } },
+          { bio: { $regex: search, $options: 'i' } },
+          { branch: { $regex: search, $options: 'i' } },
+        ]
+      });
     }
 
     // Filter by specific skill
     if (skill) {
-      query.skills = { $regex: skill, $options: 'i' };
+      conditions.push({
+        skills: { $regex: skill, $options: 'i' }
+      });
     }
 
-    // Filter by company cracked
+    // Filter by company (either cracked or currently working at)
     if (company) {
-      query.companiesCracked = { $regex: company, $options: 'i' };
+      conditions.push({
+        $or: [
+          { companiesCracked: { $regex: company, $options: 'i' } },
+          { currentCompany: { $regex: company, $options: 'i' } }
+        ]
+      });
     }
 
-    // Filter by expertise area
+    // Filter by job role / designation
+    if (currentRole) {
+      conditions.push({
+        currentRole: { $regex: currentRole, $options: 'i' }
+      });
+    }
+
+    // Filter by expertise area (domain)
     if (expertise) {
-      query.expertise = { $regex: expertise, $options: 'i' };
+      conditions.push({
+        expertise: { $regex: expertise, $options: 'i' }
+      });
+    }
+
+    if (conditions.length > 0) {
+      query.$and = conditions;
     }
 
     const mentors = await User.find(query).select('-passwordHash');

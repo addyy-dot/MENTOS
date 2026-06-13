@@ -19,7 +19,8 @@ const register = async (req, res) => {
       companiesCracked, 
       expertise,
       currentCompany,
-      currentRole
+      currentRole,
+      linkedinProfile
     } = req.body;
 
     // Validation
@@ -29,6 +30,12 @@ const register = async (req, res) => {
 
     if (role !== 'mentor' && role !== 'mentee') {
       return res.status(400).json({ message: 'Role must be either mentor or mentee. Admin accounts cannot be created via registration.' });
+    }
+
+    if (role === 'mentor') {
+      if (!currentCompany || !currentRole || !linkedinProfile) {
+        return res.status(400).json({ message: 'Current company, job role, and LinkedIn profile URL are required for mentors.' });
+      }
     }
 
     // Check if email already exists
@@ -55,6 +62,9 @@ const register = async (req, res) => {
       availability: role === 'mentor' ? (availability || '') : '',
       currentCompany: role === 'mentor' ? (currentCompany || '') : '',
       currentRole: role === 'mentor' ? (currentRole || '') : '',
+      linkedinProfile: role === 'mentor' ? (linkedinProfile || '') : '',
+      isVerified: false,
+      verificationStatus: role === 'mentor' ? 'pending' : undefined,
       companiesCracked: role === 'mentor' && Array.isArray(companiesCracked) ? companiesCracked : [],
       expertise: role === 'mentor' && Array.isArray(expertise) ? expertise : [],
       rating: 0,
@@ -152,7 +162,8 @@ const editProfile = async (req, res) => {
       currentCompany,
       currentRole,
       companiesCracked,
-      expertise 
+      expertise,
+      linkedinProfile
     } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -176,6 +187,7 @@ const editProfile = async (req, res) => {
       if (currentRole !== undefined) user.currentRole = currentRole;
       if (companiesCracked !== undefined) user.companiesCracked = Array.isArray(companiesCracked) ? companiesCracked : [];
       if (expertise !== undefined) user.expertise = Array.isArray(expertise) ? expertise : [];
+      if (linkedinProfile !== undefined) user.linkedinProfile = linkedinProfile;
     }
 
     await user.save();

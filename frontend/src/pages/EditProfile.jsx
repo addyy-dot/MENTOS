@@ -4,6 +4,23 @@ import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { User, Book, Tag, Briefcase, Award, Clock, FileText, Save } from 'lucide-react';
 
+const Linkedin = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 const EditProfile = () => {
   const { user, updateProfile } = useAuth();
   const { showToast } = useToast();
@@ -23,6 +40,7 @@ const EditProfile = () => {
   const [availability, setAvailability] = useState('');
   const [currentCompany, setCurrentCompany] = useState('');
   const [currentRole, setCurrentRole] = useState('');
+  const [linkedinProfile, setLinkedinProfile] = useState('');
   const [companiesCracked, setCompaniesCracked] = useState(''); // input as comma separated list
   const [expertise, setExpertise] = useState(''); // input as comma separated list
 
@@ -43,6 +61,7 @@ const EditProfile = () => {
         setAvailability(user.availability || '');
         setCurrentCompany(user.currentCompany || '');
         setCurrentRole(user.currentRole || '');
+        setLinkedinProfile(user.linkedinProfile || '');
         setCompaniesCracked(user.companiesCracked ? user.companiesCracked.join(', ') : '');
         setExpertise(user.expertise ? user.expertise.join(', ') : '');
       }
@@ -76,6 +95,7 @@ const EditProfile = () => {
       profileData.availability = availability;
       profileData.currentCompany = currentCompany;
       profileData.currentRole = currentRole;
+      profileData.linkedinProfile = linkedinProfile;
       profileData.companiesCracked = parseCSV(companiesCracked);
       profileData.expertise = parseCSV(expertise);
     }
@@ -195,6 +215,20 @@ const EditProfile = () => {
                     onChange={(e) => setCurrentRole(e.target.value)}
                     placeholder="e.g. Software Engineer, Tech Lead"
                     className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Linkedin className="w-4 h-4 text-slate-400" /> LinkedIn Profile URL
+                  </label>
+                  <input
+                    type="url"
+                    value={linkedinProfile}
+                    onChange={(e) => setLinkedinProfile(e.target.value)}
+                    placeholder="https://linkedin.com/in/username"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-555 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                    required={user.role === 'mentor'}
                   />
                 </div>
               </>

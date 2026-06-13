@@ -3,7 +3,24 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
-import { Star, Award, Briefcase, Calendar, Mail, FileText, ArrowLeft, Send } from 'lucide-react';
+import { Star, Award, Briefcase, Calendar, Mail, FileText, ArrowLeft, Send, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+
+const Linkedin = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 const MentorProfile = () => {
   const { id } = useParams();
@@ -88,8 +105,24 @@ const MentorProfile = () => {
 
             <h1 className="text-xl font-bold text-white">{mentor.fullName}</h1>
             <p className="text-xs font-semibold text-slate-400 mt-1 capitalize">{mentor.role}</p>
+            
+            {/* Verification Badge */}
+            {mentor.isVerified ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-emerald-500 text-sm font-bold">
+                <CheckCircle className="w-4 h-4" /> Verified Mentor
+              </div>
+            ) : mentor.verificationStatus === 'pending' ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-amber-500 text-sm font-bold">
+                <Clock className="w-4 h-4 animate-pulse" /> Verification Pending
+              </div>
+            ) : mentor.verificationStatus === 'rejected' ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-rose-500 text-sm font-bold">
+                <AlertCircle className="w-4 h-4" /> Verification Required
+              </div>
+            ) : null}
+
             {(mentor.currentRole || mentor.currentCompany) && (
-              <p className="text-xs font-bold text-blue-400 mt-2">
+              <p className="text-xs font-bold text-blue-400 mt-2.5">
                 {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
               </p>
             )}
@@ -130,6 +163,22 @@ const MentorProfile = () => {
                 <Mail className="w-4 h-4 text-slate-400" /> {mentor.email}
               </span>
             </div>
+
+            {mentor.linkedinProfile && (
+              <div className="mt-4 pt-4 border-t border-slate-800 text-left">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-1">
+                  LinkedIn Profile
+                </span>
+                <a
+                  href={mentor.linkedinProfile.startsWith('http') ? mentor.linkedinProfile : `https://${mentor.linkedinProfile}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-semibold text-blue-400 hover:underline flex items-center gap-1.5"
+                >
+                  <Linkedin className="w-4 h-4 text-blue-400" /> View LinkedIn Profile
+                </a>
+              </div>
+            )}
           </div>
         </div>
 

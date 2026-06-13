@@ -1,12 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { Users, UserCheck, UserX, FileText, Clock, CheckCircle, Zap, AlertCircle } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
+import { Users, UserCheck, UserX, FileText, Clock, CheckCircle, Zap, AlertCircle, Check, X } from 'lucide-react';
+
+const Linkedin = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 const AdminDashboard = () => {
+  const { showToast } = useToast();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const [verifications, setVerifications] = useState([]);
+  const [verificationsLoading, setVerificationsLoading] = useState(true);
+  const [verificationsError, setVerificationsError] = useState(null);
+
+  const fetchVerifications = async () => {
+    try {
+      setVerificationsLoading(true);
+      const response = await api.get('/api/admin/mentor-verifications');
+      setVerifications(response.data.mentors);
+      setVerificationsError(null);
+    } catch (err) {
+      console.error('Error fetching verifications:', err);
+      setVerificationsError(err.response?.data?.message || 'Failed to load verification requests.');
+    } finally {
+      setVerificationsLoading(false);
+    }
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      await api.patch(`/api/admin/mentor-verifications/${id}/approve`);
+      showToast('Mentor verified successfully.', 'success');
+      // Refresh statistics and list
+      const statsRes = await api.get('/api/admin/stats');
+      setStats(statsRes.data);
+      fetchVerifications();
+    } catch (err) {
+      console.error('Error approving mentor:', err);
+      showToast(err.response?.data?.message || 'Failed to approve mentor.', 'error');
+    }
+  };
+
+  const handleReject = async (id) => {
+    try {
+      await api.patch(`/api/admin/mentor-verifications/${id}/reject`);
+      showToast('Mentor verification rejected.', 'success');
+      // Refresh statistics and list
+      const statsRes = await api.get('/api/admin/stats');
+      setStats(statsRes.data);
+      fetchVerifications();
+    } catch (err) {
+      console.error('Error rejecting mentor:', err);
+      showToast(err.response?.data?.message || 'Failed to reject mentor.', 'error');
+    }
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -23,6 +88,7 @@ const AdminDashboard = () => {
     };
 
     fetchStats();
+    fetchVerifications();
   }, []);
 
   if (loading) {
@@ -162,6 +228,97 @@ const AdminDashboard = () => {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Mentor Verification Requests */}
+        <div className="mt-8 bg-[#1E293B] border border-slate-800/60 rounded-xl overflow-hidden shadow-sm">
+          <div className="px-6 py-5 border-b border-slate-800">
+            <h2 className="text-lg font-bold text-white">Mentor Verification Requests</h2>
+            <p className="text-slate-400 text-xs mt-1">Review pending mentor profiles and LinkedIn credentials for verification</p>
+          </div>
+
+          {verificationsLoading ? (
+            <div className="p-12 text-center">
+              <div className="w-8 h-8 border-2 border-slate-700 border-t-blue-500 rounded-full animate-spin mx-auto mb-3"></div>
+              <p className="text-slate-400 text-xs">Loading verification requests...</p>
+            </div>
+          ) : verificationsError ? (
+            <div className="p-8 text-center bg-rose-955 text-rose-455 font-semibold text-xs border-t border-slate-850">
+              {verificationsError}
+            </div>
+          ) : verifications.length === 0 ? (
+            <div className="p-12 text-center">
+              <UserCheck className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+              <p className="text-slate-400 text-sm font-semibold">No pending verification requests</p>
+              <p className="text-slate-500 text-xs mt-1">All registered mentors have been processed.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-[#111827] border-b border-slate-800">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Mentor</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Current Position</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">LinkedIn</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Registered</th>
+                    <th className="px-6 py-4 text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800">
+                  {verifications.map((mentor) => (
+                    <tr key={mentor._id} className="hover:bg-[#111827]/40 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-xs uppercase">
+                            {mentor.fullName.charAt(0)}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-slate-200 text-sm">{mentor.fullName}</div>
+                            <div className="text-slate-450 text-xs mt-0.5">{mentor.email}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-slate-300 font-medium text-xs">{mentor.currentRole}</div>
+                        <div className="text-slate-450 text-[11px] mt-0.5">{mentor.currentCompany}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <a
+                          href={mentor.linkedinProfile.startsWith('http') ? mentor.linkedinProfile : `https://${mentor.linkedinProfile}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-955 hover:bg-blue-600 border border-blue-900 hover:border-blue-600 text-blue-400 hover:text-white text-xs font-bold transition-all"
+                        >
+                          <Linkedin className="w-3.5 h-3.5" /> Profile
+                        </a>
+                      </td>
+                      <td className="px-6 py-4 text-slate-400 text-xs">
+                        {new Date(mentor.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleApprove(mentor._id)}
+                            className="p-1.5 rounded-lg bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-900 hover:border-emerald-600 text-emerald-400 hover:text-white transition-all cursor-pointer flex items-center gap-1 text-xs font-bold px-2.5 py-1.5"
+                            title="Approve verification"
+                          >
+                            <Check className="w-3.5 h-3.5" /> Approve
+                          </button>
+                          <button
+                            onClick={() => handleReject(mentor._id)}
+                            className="p-1.5 rounded-lg bg-rose-955 hover:bg-rose-600 border border-rose-900 hover:border-rose-600 text-rose-400 hover:text-white transition-all cursor-pointer flex items-center gap-1 text-xs font-bold px-2.5 py-1.5"
+                            title="Reject verification"
+                          >
+                            <X className="w-3.5 h-3.5" /> Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>

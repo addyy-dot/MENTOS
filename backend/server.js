@@ -8,10 +8,10 @@ const { seedAdmin } = require('./seeders/adminSeeder');
 dotenv.config();
 
 // Connect to Database
-connectDB();
-
-// Seed default admin account
-seedAdmin();
+connectDB().then(() => {
+  // Seed default admin account
+  seedAdmin();
+});
 
 const app = express();
 

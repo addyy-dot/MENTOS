@@ -4,7 +4,7 @@ import api from '../services/api';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { formatDate, formatTime } from '../utils/formatDate';
-import { FileText, Calendar, CheckCircle2, User, Star, Clock, Video, Award } from 'lucide-react';
+import { FileText, Calendar, CheckCircle2, User, Star, Clock, Video, Award, CheckCircle, AlertCircle } from 'lucide-react';
 
 const MentorDashboard = () => {
   const { user } = useAuth();
@@ -97,8 +97,24 @@ const MentorDashboard = () => {
             </div>
             <h2 className="text-lg font-bold text-white">{user.fullName}</h2>
             <p className="text-xs font-semibold text-slate-400 mt-0.5 capitalize">{user.role}</p>
+            
+            {/* Verification Badge */}
+            {user.isVerified ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-emerald-500 text-sm font-bold">
+                <CheckCircle className="w-4 h-4" /> Verified Mentor
+              </div>
+            ) : user.verificationStatus === 'pending' ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-amber-500 text-sm font-bold">
+                <Clock className="w-4 h-4 animate-pulse" /> Verification Pending
+              </div>
+            ) : user.verificationStatus === 'rejected' ? (
+              <div className="mt-2 flex items-center justify-center gap-1.5 text-rose-500 text-sm font-bold">
+                <AlertCircle className="w-4 h-4" /> Verification Required
+              </div>
+            ) : null}
+
             {(user.currentRole || user.currentCompany) && (
-              <p className="text-xs font-bold text-blue-400 mt-1">
+              <p className="text-xs font-bold text-blue-400 mt-2.5">
                 {user.currentRole} {user.currentCompany ? `@ ${user.currentCompany}` : ''}
               </p>
             )}
