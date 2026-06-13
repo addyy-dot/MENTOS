@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, Upload, Trash2, User, RefreshCw, X, Video } from 'lucide-react';
+import { Camera, Upload, Trash2, User, RefreshCw, X } from 'lucide-react';
 import { getInitials } from '../utils/initials';
 
 const PhotoUpload = ({ value, onChange, fullName }) => {
