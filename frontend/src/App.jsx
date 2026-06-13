@@ -31,7 +31,7 @@ function App() {
         <ToastProvider>
           <div className="min-h-screen bg-[#0F172A] flex flex-col font-sans">
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-grow pb-16 min-h-[calc(100vh-4rem)]">
               <Routes>
                 {/* Guest Routes */}
                 <Route
