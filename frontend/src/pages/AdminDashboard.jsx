@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useToast } from '../context/ToastContext';
 import { Users, UserCheck, UserX, FileText, Clock, CheckCircle, Zap, AlertCircle, Check, X } from 'lucide-react';
+import { getInitials } from '../utils/initials';
+
 
 const Linkedin = (props) => (
   <svg
@@ -269,8 +271,12 @@ const AdminDashboard = () => {
                     <tr key={mentor._id} className="hover:bg-[#111827]/40 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-xs uppercase">
-                            {mentor.fullName.charAt(0)}
+                          <div className="w-9 h-9 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-xs uppercase overflow-hidden">
+                            {mentor.profilePicture ? (
+                              <img src={mentor.profilePicture} alt={mentor.fullName} className="w-full h-full object-cover" />
+                            ) : (
+                              getInitials(mentor.fullName)
+                            )}
                           </div>
                           <div>
                             <div className="font-semibold text-slate-200 text-sm">{mentor.fullName}</div>

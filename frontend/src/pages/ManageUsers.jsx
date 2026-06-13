@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from '../context/ToastContext';
 import api from '../services/api';
 import { Trash2, Search } from 'lucide-react';
+import { getInitials } from '../utils/initials';
+
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -128,8 +130,12 @@ const ManageUsers = () => {
                     <tr key={user._id} className="hover:bg-[#111827]/40 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-sm">
-                            {user.fullName.charAt(0).toUpperCase()}
+                          <div className="w-10 h-10 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-sm overflow-hidden">
+                            {user.profilePicture ? (
+                              <img src={user.profilePicture} alt={user.fullName} className="w-full h-full object-cover" />
+                            ) : (
+                              getInitials(user.fullName)
+                            )}
                           </div>
                           <span className="font-medium text-slate-200">{user.fullName}</span>
                         </div>

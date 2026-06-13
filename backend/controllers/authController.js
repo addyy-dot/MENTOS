@@ -163,7 +163,8 @@ const editProfile = async (req, res) => {
       currentRole,
       companiesCracked,
       expertise,
-      linkedinProfile
+      linkedinProfile,
+      profilePicture
     } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -176,6 +177,7 @@ const editProfile = async (req, res) => {
     if (bio !== undefined) user.bio = bio;
     if (branch !== undefined) user.branch = branch;
     if (skills !== undefined) user.skills = Array.isArray(skills) ? skills : [];
+    if (profilePicture !== undefined) user.profilePicture = profilePicture;
 
     // Role-specific fields
     if (user.role === 'mentee') {

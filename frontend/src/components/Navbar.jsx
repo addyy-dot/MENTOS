@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { Menu, X, LogOut, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import { getInitials } from '../utils/initials';
+
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -176,8 +178,12 @@ const Navbar = () => {
                     <span className="text-[10px] font-bold uppercase tracking-wider text-blue-450 mt-1">{user.role}</span>
                   </div>
                   {/* User Avatar Circle */}
-                  <div className="w-8 h-8 rounded-full bg-blue-955 text-blue-400 border border-blue-900/30 flex items-center justify-center font-bold text-sm uppercase">
-                    {user.fullName.charAt(0)}
+                  <div className="w-8 h-8 rounded-full bg-blue-955 text-blue-400 border border-blue-900/30 flex items-center justify-center font-bold text-sm uppercase overflow-hidden">
+                    {user.profilePicture ? (
+                      <img src={user.profilePicture} alt={user.fullName} className="w-full h-full object-cover" />
+                    ) : (
+                      getInitials(user.fullName)
+                    )}
                   </div>
                   <button
                     onClick={handleLogout}
@@ -246,8 +252,12 @@ const Navbar = () => {
             ) : (
               <>
                 <div className="flex items-center gap-3 px-3 py-3 border-b border-slate-800 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-blue-950/60 text-blue-400 flex items-center justify-center font-bold text-base uppercase">
-                    {user.fullName.charAt(0)}
+                  <div className="w-10 h-10 rounded-full bg-blue-950/60 text-blue-400 flex items-center justify-center font-bold text-base uppercase overflow-hidden">
+                    {user.profilePicture ? (
+                      <img src={user.profilePicture} alt={user.fullName} className="w-full h-full object-cover" />
+                    ) : (
+                      getInitials(user.fullName)
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <span className="text-base font-bold text-slate-200 leading-tight">{user.fullName}</span>

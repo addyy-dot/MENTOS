@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { User, Book, Tag, Briefcase, Award, Clock, FileText, Save } from 'lucide-react';
+import PhotoUpload from '../components/PhotoUpload';
+
 
 const Linkedin = (props) => (
   <svg
@@ -31,6 +33,7 @@ const EditProfile = () => {
   const [bio, setBio] = useState('');
   const [branch, setBranch] = useState('');
   const [skills, setSkills] = useState(''); // input as comma separated list
+  const [profilePicture, setProfilePicture] = useState('');
 
   // Mentee fields
   const [year, setYear] = useState('');
@@ -53,6 +56,7 @@ const EditProfile = () => {
       setBio(user.bio || '');
       setBranch(user.branch || '');
       setSkills(user.skills ? user.skills.join(', ') : '');
+      setProfilePicture(user.profilePicture || '');
 
       if (user.role === 'mentee') {
         setYear(user.year || '');
@@ -86,6 +90,7 @@ const EditProfile = () => {
       bio,
       branch,
       skills: parseCSV(skills),
+      profilePicture,
     };
 
     if (user.role === 'mentee') {
@@ -245,6 +250,18 @@ const EditProfile = () => {
                 onChange={(e) => setSkills(e.target.value)}
                 placeholder="React.js, Node.js, Python, System Design"
                 className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              />
+            </div>
+
+            {/* Profile Photo Upload / Capture */}
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                <User className="w-4 h-4 text-slate-400" /> Profile Photo
+              </label>
+              <PhotoUpload
+                value={profilePicture}
+                onChange={setProfilePicture}
+                fullName={fullName}
               />
             </div>
 

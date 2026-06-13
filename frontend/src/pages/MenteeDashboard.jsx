@@ -5,6 +5,8 @@ import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { formatDate } from '../utils/formatDate';
 import { Compass, FileText, User, HelpCircle, CheckCircle, Clock, Calendar } from 'lucide-react';
+import { getInitials } from '../utils/initials';
+
 
 const MenteeDashboard = () => {
   const { user } = useAuth();
@@ -92,8 +94,12 @@ const MenteeDashboard = () => {
         {/* Profile Card */}
         <div className="bg-[#1E293B] border border-slate-800 p-6 rounded-3xl shadow-sm h-fit">
           <div className="flex flex-col items-center text-center pb-6 border-b border-slate-800">
-            <div className="w-20 h-20 bg-blue-950/65 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-2xl uppercase mb-4 shadow-inner">
-              {user.fullName.charAt(0)}
+            <div className="w-20 h-20 bg-blue-950/65 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-2xl uppercase mb-4 shadow-inner overflow-hidden">
+              {user.profilePicture ? (
+                <img src={user.profilePicture} alt={user.fullName} className="w-full h-full object-cover" />
+              ) : (
+                getInitials(user.fullName)
+              )}
             </div>
             <h2 className="text-lg font-bold text-white">{user.fullName}</h2>
             <p className="text-xs font-semibold text-slate-400 capitalize mt-0.5">{user.role}</p>

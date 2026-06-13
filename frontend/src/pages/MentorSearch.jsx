@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useToast } from '../context/ToastContext';
 import { Search, SlidersHorizontal, Star, Briefcase, Award, GraduationCap, X, CheckCircle } from 'lucide-react';
+import { getInitials } from '../utils/initials';
+
 
 const MentorSearch = () => {
   const { showToast } = useToast();
@@ -251,8 +253,12 @@ const MentorSearch = () => {
                     {/* User Intro & Rating */}
                     <div className="flex justify-between items-start">
                       <div className="flex gap-3">
-                        <div className="w-12 h-12 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-2xl flex items-center justify-center font-bold text-base uppercase shrink-0">
-                          {mentor.fullName.charAt(0)}
+                        <div className="w-12 h-12 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-2xl flex items-center justify-center font-bold text-base uppercase shrink-0 overflow-hidden">
+                          {mentor.profilePicture ? (
+                            <img src={mentor.profilePicture} alt={mentor.fullName} className="w-full h-full object-cover" />
+                          ) : (
+                            getInitials(mentor.fullName)
+                          )}
                         </div>
                         <div>
                           <div className="flex items-center gap-2">

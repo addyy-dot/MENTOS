@@ -4,6 +4,8 @@ import api from '../services/api';
 import useAuth from '../hooks/useAuth';
 import { useToast } from '../context/ToastContext';
 import { Star, Award, Briefcase, Calendar, Mail, FileText, ArrowLeft, Send, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { getInitials } from '../utils/initials';
+
 
 const Linkedin = (props) => (
   <svg
@@ -99,8 +101,12 @@ const MentorProfile = () => {
         {/* Mentor Overview Sidebar */}
         <div className="space-y-6">
           <div className="bg-[#1E293B] border border-slate-800 p-6 rounded-3xl shadow-sm text-center">
-            <div className="w-24 h-24 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-3xl uppercase mx-auto mb-4 shadow-inner">
-              {mentor.fullName.charAt(0)}
+            <div className="w-24 h-24 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-3xl uppercase mx-auto mb-4 shadow-inner overflow-hidden">
+              {mentor.profilePicture ? (
+                <img src={mentor.profilePicture} alt={mentor.fullName} className="w-full h-full object-cover" />
+              ) : (
+                getInitials(mentor.fullName)
+              )}
             </div>
 
             <h1 className="text-xl font-bold text-white">{mentor.fullName}</h1>
