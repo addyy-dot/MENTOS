@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 
 // Components & guards
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import { RoleGuard, GuestGuard } from './components/RoleGuard';
 
 // Pages
@@ -28,7 +29,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ToastProvider>
-          <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+          <div className="min-h-screen bg-[#0F172A] flex flex-col font-sans">
             <Navbar />
             <main className="flex-grow">
               <Routes>
@@ -158,6 +159,7 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
+            <Footer />
           </div>
         </ToastProvider>
       </AuthProvider>

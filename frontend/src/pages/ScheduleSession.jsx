@@ -87,7 +87,7 @@ const ScheduleSession = () => {
   if (loading) {
     return (
       <div className="py-24 flex justify-center">
-        <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -96,31 +96,31 @@ const ScheduleSession = () => {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Link
         to="/incoming-requests"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-blue-400 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4.5 h-4.5" /> Back to Requests
       </Link>
 
-      <div className="bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/40 p-8 sm:p-10 overflow-hidden relative">
-        <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+      <div className="bg-[#1E293B] border border-slate-800 rounded-3xl p-8 sm:p-10 overflow-hidden relative shadow-sm">
+        <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-600 to-teal-600"></div>
 
-        <div className="mb-8 border-b border-slate-100 pb-6">
-          <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-            <Calendar className="w-5.5 h-5.5 text-emerald-600" />
+        <div className="mb-8 border-b border-slate-800 pb-6">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <Calendar className="w-5.5 h-5.5 text-emerald-450" />
             {requestDetail?.status === 'Scheduled' ? 'Reschedule Session' : 'Schedule Mentorship Session'}
           </h2>
           <p className="text-xs text-slate-400 font-semibold mt-1">
             Set the date, time, and provide your Google Meet invite details for{' '}
-            <strong className="text-slate-650">{requestDetail?.menteeId?.fullName}</strong>.
+            <strong className="text-white">{requestDetail?.menteeId?.fullName}</strong>.
           </p>
         </div>
 
         {/* Student query message snippet */}
-        <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl mb-8">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+        <div className="bg-[#111827] border border-slate-800 p-4 rounded-2xl mb-8">
+          <span className="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">
             Requested Prep details:
           </span>
-          <p className="text-sm text-slate-600 font-medium leading-relaxed italic">
+          <p className="text-sm text-slate-400 font-medium leading-relaxed italic">
             "{requestDetail?.requestMessage}"
           </p>
         </div>
@@ -129,28 +129,28 @@ const ScheduleSession = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {/* Session Date */}
             <div>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
-                <Calendar className="w-4 h-4 text-slate-450" /> Date
+              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
+                <Calendar className="w-4 h-4 text-slate-500" /> Date
               </label>
               <input
                 type="date"
                 value={sessionDate}
                 onChange={(e) => setSessionDate(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 required
               />
             </div>
 
             {/* Session Time */}
             <div>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
-                <Clock className="w-4 h-4 text-slate-450" /> Time (24h)
+              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
+                <Clock className="w-4 h-4 text-slate-500" /> Time (24h)
               </label>
               <input
                 type="time"
                 value={sessionTime}
                 onChange={(e) => setSessionTime(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 required
               />
             </div>
@@ -158,15 +158,15 @@ const ScheduleSession = () => {
 
           {/* Google Meet Link */}
           <div>
-            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
-              <Video className="w-4 h-4 text-slate-450" /> Google Meet Link
+            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
+              <Video className="w-4 h-4 text-slate-500" /> Google Meet Link
             </label>
             <input
               type="text"
               value={googleMeetLink}
               onChange={(e) => setGoogleMeetLink(e.target.value)}
               placeholder="e.g. https://meet.google.com/abc-defg-hij"
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-205 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               required
             />
           </div>
@@ -174,7 +174,7 @@ const ScheduleSession = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-bold rounded-2xl shadow-lg shadow-emerald-150 hover:shadow-emerald-250 transition-all flex items-center justify-center gap-2 text-sm"
+            className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-450 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer"
           >
             {submitting ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

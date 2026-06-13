@@ -63,10 +63,10 @@ const ManageUsers = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#0F172A]">
         <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
-          <p className="mt-4 text-slate-500 font-medium animate-pulse">Loading users...</p>
+          <div className="w-12 h-12 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
+          <p className="mt-4 text-slate-400 font-medium animate-pulse">Loading users...</p>
         </div>
       </div>
     );
@@ -74,25 +74,25 @@ const ManageUsers = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="bg-rose-50 border border-rose-200 rounded-lg p-6 max-w-md">
-          <p className="text-rose-700 font-semibold">{error}</p>
+      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
+        <div className="bg-rose-955 border border-rose-900/40 rounded-lg p-6 max-w-md">
+          <p className="text-rose-455 font-semibold">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#0F172A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Manage Users</h1>
-          <p className="text-slate-600 mt-1">View all users and manage their accounts</p>
+          <h1 className="text-3xl font-bold text-white">Manage Users</h1>
+          <p className="text-slate-400 mt-1">View all users and manage their accounts</p>
         </div>
 
         {/* Search Box */}
-        <div className="mb-6 bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+        <div className="mb-6 bg-[#1E293B] rounded-xl border border-slate-800 shadow-sm p-4">
           <div className="flex items-center gap-2 text-slate-400">
             <Search className="w-5 h-5" />
             <input
@@ -100,62 +100,62 @@ const ManageUsers = () => {
               placeholder="Search by name or email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 bg-transparent outline-none text-slate-900 placeholder-slate-400"
+              className="flex-1 bg-transparent outline-none text-slate-205 placeholder-slate-550"
             />
           </div>
         </div>
 
         {/* Users Table */}
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-[#1E293B] border border-slate-800 rounded-xl shadow-sm overflow-hidden">
           {users.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-slate-500 font-medium">No users found</p>
+              <p className="text-slate-400 font-medium">No users found</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-slate-50 border-b border-slate-200">
+                <thead className="bg-[#111827] border-b border-slate-800">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Name</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Email</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Role</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">Created Date</th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-slate-700">Actions</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-400">Name</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-400">Email</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-400">Role</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-slate-400">Created Date</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-slate-400">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200">
+                <tbody className="divide-y divide-slate-800">
                   {users.map((user) => (
-                    <tr key={user._id} className="hover:bg-slate-50 transition-colors">
+                    <tr key={user._id} className="hover:bg-[#111827]/40 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-sm">
                             {user.fullName.charAt(0).toUpperCase()}
                           </div>
-                          <span className="font-medium text-slate-900">{user.fullName}</span>
+                          <span className="font-medium text-slate-200">{user.fullName}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-slate-600">{user.email}</td>
+                      <td className="px-6 py-4 text-slate-400">{user.email}</td>
                       <td className="px-6 py-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
+                          className={`px-3 py-1 rounded-full border text-xs font-semibold capitalize ${
                             user.role === 'mentor'
-                              ? 'bg-indigo-100 text-indigo-700'
+                              ? 'bg-blue-955 border-blue-900/30 text-blue-450'
                               : user.role === 'admin'
-                              ? 'bg-purple-100 text-purple-700'
-                              : 'bg-blue-100 text-blue-700'
+                              ? 'bg-purple-955 border-purple-900/30 text-purple-400'
+                              : 'bg-slate-800 border-slate-700 text-slate-300'
                           }`}
                         >
                           {user.role}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-slate-600">
+                      <td className="px-6 py-4 text-slate-400">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 text-center">
                         <button
                           onClick={() => openDeleteModal(user)}
                           disabled={deletingUserId === user._id}
-                          className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                           title="Delete user"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -171,14 +171,14 @@ const ManageUsers = () => {
 
         {/* Delete Confirmation Modal */}
         {showDeleteModal && userToDelete && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-lg max-w-sm w-full">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+            <div className="bg-[#1E293B] border border-slate-800 rounded-xl shadow-lg max-w-sm w-full">
               <div className="p-6">
-                <h3 className="text-lg font-bold text-slate-900">Delete User?</h3>
-                <p className="text-slate-600 mt-2">
+                <h3 className="text-lg font-bold text-white">Delete User?</h3>
+                <p className="text-slate-400 mt-2">
                   Are you sure you want to delete{' '}
-                  <span className="font-semibold text-slate-900">{userToDelete.fullName}</span>
-                  {''}({userToDelete.email})? This action cannot be undone.
+                  <span className="font-semibold text-white">{userToDelete.fullName}</span>
+                  {' '}({userToDelete.email})? This action cannot be undone.
                 </p>
                 <p className="text-sm text-slate-500 mt-3">
                   All associated requests will also be deleted.
@@ -188,14 +188,14 @@ const ManageUsers = () => {
                   <button
                     onClick={() => setShowDeleteModal(false)}
                     disabled={deletingUserId === userToDelete._id}
-                    className="flex-1 px-4 py-2 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-colors disabled:opacity-50"
+                    className="flex-1 px-4 py-2 rounded-lg bg-[#111827] border border-slate-700 text-slate-300 font-semibold hover:bg-slate-800 transition-colors disabled:opacity-50 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleDeleteUser}
                     disabled={deletingUserId === userToDelete._id}
-                    className="flex-1 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {deletingUserId === userToDelete._id ? (
                       <>

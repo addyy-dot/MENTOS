@@ -1,89 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #f5f3ff;
-  --color-primary-100: #ede9fe;
-  --color-primary-200: #ddd6fe;
-  --color-primary-300: #c4b5fd;
-  --color-primary-400: #a78bfa;
-  --color-primary-500: #8b5cf6;
-  --color-primary-600: #7c3aed;
-  --color-primary-700: #6d28d9;
-  --color-primary-800: #5b21b6;
-  --color-primary-900: #4c1d95;
-  --color-primary-950: #2e1065;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+  
+  --color-brand-blue: #2563eb;
+  --color-brand-dark: #1e3a8a;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Inter', sans-serif;
 }
 
 :root {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #FFFFFF; /* White */
+}
+
 body {
-  background-color: #f8fafc; /* slate-50 */
-  color: #0f172a; /* slate-900 */
+  background-color: #0F172A; /* Slate-900 base background */
+  color: #CBD5E1; /* Slate-300 body text */
 }
 
-/* Glassmorphism utility classes */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.glass-panel-dark {
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Custom Scrollbar for premium feel */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #0F172A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* slate-300 */
+  background: #334155; /* slate-700 */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; /* slate-400 */
+  background: #475569; /* slate-600 */
 }
 
-/* Custom Micro-Animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+/* Standard Shadow Card utility */
+.card-shadow {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.card-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
 }
 
-.shimmer {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-  background-size: 200% 100%;
-  animation: loading-shimmer 1.5s infinite;
-}
-
-@keyframes loading-shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}

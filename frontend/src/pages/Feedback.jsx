@@ -76,14 +76,14 @@ const Feedback = () => {
             type="button"
             onClick={() => setRating(star)}
             onMouseEnter={() => setHoverRating(star)}
-            onMouseLeave={() => setHoverRating(0)}
-            className="p-1 hover:scale-110 transition-transform focus:outline-none"
+            onMouseLeave={() => setHoverRating(star)}
+            className="p-1 hover:scale-110 transition-transform focus:outline-none cursor-pointer"
           >
             <Star
               className={`w-10 h-10 transition-colors ${
                 star <= (hoverRating || rating)
                   ? 'fill-amber-400 text-amber-400'
-                  : 'text-slate-200'
+                  : 'text-slate-700'
               }`}
             />
           </button>
@@ -99,7 +99,7 @@ const Feedback = () => {
           <Star
             key={star}
             className={`w-5 h-5 ${
-              star <= num ? 'fill-amber-400 text-amber-400' : 'text-slate-200'
+              star <= num ? 'fill-amber-400 text-amber-400' : 'text-slate-700'
             }`}
           />
         ))}
@@ -110,7 +110,7 @@ const Feedback = () => {
   if (loading) {
     return (
       <div className="py-24 flex justify-center">
-        <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -119,37 +119,37 @@ const Feedback = () => {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Link
         to="/my-requests"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-blue-400 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4.5 h-4.5" /> Back to My Requests
       </Link>
 
-      <div className="bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/40 p-8 sm:p-10 overflow-hidden relative">
-        <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-indigo-500 to-violet-500"></div>
+      <div className="bg-[#1E293B] border border-slate-800 rounded-3xl p-8 sm:p-10 overflow-hidden relative shadow-sm">
+        <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
 
         {existingFeedback ? (
           /* View mode: feedback already submitted */
           <div className="text-center space-y-6 pt-4">
-            <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-blue-955 text-blue-405 border border-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-9 h-9" />
             </div>
             
             <div>
-              <h2 className="text-2xl font-bold text-slate-800">Feedback Submitted</h2>
+              <h2 className="text-2xl font-bold text-white">Feedback Submitted</h2>
               <p className="text-sm font-semibold text-slate-400 mt-1">Thank you for rating your guidance slot.</p>
             </div>
 
-            <div className="max-w-md mx-auto bg-slate-50 border border-slate-100 rounded-3xl p-6 space-y-4">
+            <div className="max-w-md mx-auto bg-[#111827] border border-slate-800 rounded-3xl p-6 space-y-4">
               <div className="flex flex-col items-center gap-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Your rating</span>
+                <span className="text-[10px] font-bold text-slate-450 uppercase tracking-wider">Your rating</span>
                 {renderStarsDisplay(existingFeedback.rating)}
               </div>
 
-              <div className="border-t border-slate-200/60 pt-4 text-left">
-                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 text-center">
+              <div className="border-t border-slate-800 pt-4 text-left">
+                <span className="block text-[10px] font-bold text-slate-450 uppercase tracking-wider mb-1 text-center">
                   Your Comments
                 </span>
-                <p className="text-sm text-slate-650 font-medium leading-relaxed italic text-center">
+                <p className="text-sm text-slate-300 font-medium leading-relaxed italic text-center">
                   "{existingFeedback.comments}"
                 </p>
               </div>
@@ -157,7 +157,7 @@ const Feedback = () => {
 
             <Link
               to="/my-requests"
-              className="inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition-colors text-sm"
+              className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-sm transition-colors text-sm cursor-pointer"
             >
               Return to Requests
             </Link>
@@ -166,10 +166,10 @@ const Feedback = () => {
           /* Edit mode: submit new feedback */
           <div>
             <div className="text-center mb-8">
-              <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-blue-955 text-blue-405 border border-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-slate-800">Rate Your Session</h2>
+              <h2 className="text-xl font-bold text-white">Rate Your Session</h2>
               <p className="text-xs text-slate-400 font-semibold mt-1">
                 Help other students by reviewing your placement preparation and advice slot.
               </p>
@@ -177,12 +177,12 @@ const Feedback = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="text-center">
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide">
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide">
                   Select Rating
                 </label>
                 {renderStarsSelector()}
                 {rating > 0 && (
-                  <span className="text-xs font-bold text-indigo-600 capitalize">
+                  <span className="text-xs font-bold text-blue-400 capitalize">
                     {rating === 5 && 'Excellent guidance!'}
                     {rating === 4 && 'Very helpful session!'}
                     {rating === 3 && 'Good advice.'}
@@ -193,7 +193,7 @@ const Feedback = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
                   Comments & Takeaways
                 </label>
                 <textarea
@@ -201,7 +201,7 @@ const Feedback = () => {
                   onChange={(e) => setComments(e.target.value)}
                   placeholder="Share details on how the mentor helped you (e.g. key suggestions, resume tweaks, topics to focus on)..."
                   rows="5"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
+                  className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all resize-none"
                   required
                 ></textarea>
               </div>
@@ -209,7 +209,7 @@ const Feedback = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold rounded-2xl shadow-lg shadow-indigo-150 hover:shadow-indigo-250 transition-all flex items-center justify-center gap-2 text-sm"
+                className="w-full py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer"
               >
                 {submitting ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

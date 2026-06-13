@@ -60,7 +60,7 @@ const MentorProfile = () => {
   if (loading) {
     return (
       <div className="py-24 flex justify-center">
-        <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -72,7 +72,7 @@ const MentorProfile = () => {
       {/* Back Button */}
       <Link
         to="/search"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-blue-400 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4.5 h-4.5" /> Back to Search
       </Link>
@@ -81,16 +81,16 @@ const MentorProfile = () => {
         
         {/* Mentor Overview Sidebar */}
         <div className="space-y-6">
-          <div className="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm text-center">
-            <div className="w-24 h-24 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center font-bold text-3xl uppercase mx-auto mb-4 shadow-inner">
+          <div className="bg-[#1E293B] border border-slate-800 p-6 rounded-3xl shadow-sm text-center">
+            <div className="w-24 h-24 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-3xl uppercase mx-auto mb-4 shadow-inner">
               {mentor.fullName.charAt(0)}
             </div>
 
-            <h1 className="text-xl font-bold text-slate-800">{mentor.fullName}</h1>
+            <h1 className="text-xl font-bold text-white">{mentor.fullName}</h1>
             <p className="text-xs font-semibold text-slate-400 mt-1 capitalize">{mentor.role}</p>
 
             <div className="flex items-center justify-center gap-1.5 mt-4">
-              <div className="flex items-center gap-1 bg-amber-50 px-3 py-1 rounded-xl border border-amber-100 text-amber-700 text-sm font-bold">
+              <div className="flex items-center gap-1 bg-amber-955 px-3 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-sm font-bold">
                 <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
                 {mentor.rating ? mentor.rating.toFixed(1) : '0.0'}
               </div>
@@ -99,7 +99,7 @@ const MentorProfile = () => {
 
             {/* Placement Details */}
             {mentor.companiesCracked && mentor.companiesCracked.length > 0 && (
-              <div className="mt-6 pt-6 border-t border-slate-100 text-left">
+              <div className="mt-6 pt-6 border-t border-slate-800 text-left">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-2">
                   Placed Companies
                 </span>
@@ -107,7 +107,7 @@ const MentorProfile = () => {
                   {mentor.companiesCracked.map((c, idx) => (
                     <span
                       key={idx}
-                      className="px-2.5 py-1 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-lg flex items-center gap-1.5"
+                      className="px-2.5 py-1 bg-emerald-955 border border-emerald-900 text-emerald-400 text-xs font-semibold rounded-lg flex items-center gap-1.5"
                     >
                       <Award className="w-3.5 h-3.5" /> {c}
                     </span>
@@ -117,11 +117,11 @@ const MentorProfile = () => {
             )}
 
             {/* Email info */}
-            <div className="mt-4 pt-4 border-t border-slate-100 text-left">
+            <div className="mt-4 pt-4 border-t border-slate-800 text-left">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-1">
                 Contact Email
               </span>
-              <span className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                 <Mail className="w-4 h-4 text-slate-400" /> {mentor.email}
               </span>
             </div>
@@ -131,10 +131,10 @@ const MentorProfile = () => {
         {/* Profile Details & Request Form */}
         <div className="lg:col-span-2 space-y-6">
           {/* Main Info */}
-          <div className="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm space-y-6">
+          <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-3xl shadow-sm space-y-6">
             <div>
-              <h2 className="text-lg font-bold text-slate-800 border-b border-slate-50 pb-2">Biography</h2>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed mt-3 whitespace-pre-line">
+              <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Biography</h2>
+              <p className="text-sm text-slate-400 font-medium leading-relaxed mt-3 whitespace-pre-line">
                 {mentor.bio || 'This mentor has not written a biography yet.'}
               </p>
             </div>
@@ -142,12 +142,12 @@ const MentorProfile = () => {
             {/* Expertise */}
             {mentor.expertise && mentor.expertise.length > 0 && (
               <div>
-                <h2 className="text-lg font-bold text-slate-800 border-b border-slate-50 pb-2">Domains of Expertise</h2>
+                <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Domains of Expertise</h2>
                 <div className="flex flex-wrap gap-2 mt-3.5">
                   {mentor.expertise.map((e, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold rounded-xl flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-blue-955 border border-blue-900 text-blue-400 text-xs font-bold rounded-xl flex items-center gap-1.5"
                     >
                       <Briefcase className="w-4 h-4" /> {e}
                     </span>
@@ -159,10 +159,10 @@ const MentorProfile = () => {
             {/* Skills */}
             {mentor.skills && mentor.skills.length > 0 && (
               <div>
-                <h2 className="text-lg font-bold text-slate-800 border-b border-slate-50 pb-2">Technical Skills</h2>
+                <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">Technical Skills</h2>
                 <div className="flex flex-wrap gap-1.5 mt-3.5">
                   {mentor.skills.map((skill, idx) => (
-                    <span key={idx} className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg">
+                    <span key={idx} className="px-2.5 py-1 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium rounded-lg">
                       {skill}
                     </span>
                   ))}
@@ -172,9 +172,9 @@ const MentorProfile = () => {
 
             {/* Availability */}
             <div>
-              <h2 className="text-lg font-bold text-slate-800 border-b border-slate-50 pb-2">General Availability</h2>
-              <div className="flex items-center gap-2 mt-3.5 text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-100 p-3.5 rounded-2xl">
-                <Calendar className="w-5 h-5 text-indigo-600 shrink-0" />
+              <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">General Availability</h2>
+              <div className="flex items-center gap-2 mt-3.5 text-sm font-semibold text-slate-300 bg-[#111827] border border-slate-800 p-3.5 rounded-2xl">
+                <Calendar className="w-5 h-5 text-blue-400 shrink-0" />
                 <span>{mentor.availability || 'Weekends, evenings on schedule'}</span>
               </div>
             </div>
@@ -182,9 +182,9 @@ const MentorProfile = () => {
 
           {/* Request Placement Prep form (only shown to mentees) */}
           {user && user.role === 'mentee' && (
-            <div className="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm">
-              <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2 mb-2">
-                <FileText className="w-5 h-5 text-indigo-600" /> Request Mentorship Session
+            <div className="bg-[#1E293B] border border-slate-800 p-8 rounded-3xl shadow-sm">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                <FileText className="w-5 h-5 text-blue-400" /> Request Mentorship Session
               </h2>
               <p className="text-xs text-slate-400 font-semibold mb-6">
                 Briefly introduce yourself and detail what placement guidance you need (e.g. resume review, mock interviews, backend coding prep).
@@ -196,14 +196,14 @@ const MentorProfile = () => {
                   onChange={(e) => setRequestMessage(e.target.value)}
                   placeholder="I am preparing for a backend dev interview and would love your guidance on Mock Interviews and System Design queries..."
                   rows="4"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
+                  className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all resize-none"
                   required
                 ></textarea>
 
                 <button
                   type="submit"
                   disabled={sendingRequest}
-                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold rounded-2xl shadow-lg shadow-indigo-150 hover:shadow-indigo-250 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {sendingRequest ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

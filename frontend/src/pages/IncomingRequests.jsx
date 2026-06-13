@@ -49,18 +49,18 @@ const IncomingRequests = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Title */}
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Incoming Requests</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Incoming Requests</h1>
         <p className="text-slate-400 font-semibold mt-1">Review placement guidance queries sent by students and schedule slots.</p>
       </div>
 
       {loading ? (
         <div className="py-24 flex justify-center">
-          <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-slate-700 border-t-blue-500 rounded-full animate-spin"></div>
         </div>
       ) : requests.length === 0 ? (
-        <div className="bg-white border border-slate-100 p-12 rounded-3xl text-center shadow-sm max-w-lg mx-auto">
-          <Clock className="w-16 h-16 text-slate-350 mx-auto mb-4" />
-          <h3 className="text-sm font-extrabold text-slate-700">No active incoming requests</h3>
+        <div className="bg-[#1E293B] border border-slate-800 p-12 rounded-3xl text-center shadow-sm max-w-lg mx-auto">
+          <Clock className="w-16 h-16 text-slate-500 mx-auto mb-4" />
+          <h3 className="text-sm font-extrabold text-slate-350">No active incoming requests</h3>
           <p className="text-xs text-slate-400 mt-2">
             Mentees who send request messages for career guidance will appear in this folder.
           </p>
@@ -70,20 +70,20 @@ const IncomingRequests = () => {
           {requests.map((req) => (
             <div
               key={req._id}
-              className="bg-white border border-slate-100 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-350 flex flex-col md:flex-row justify-between gap-6"
+              className="bg-[#1E293B] border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm hover:border-slate-700 transition-all duration-350 flex flex-col md:flex-row justify-between gap-6"
             >
               {/* Mentee info & message */}
               <div className="flex-grow space-y-4">
                 <div className="flex flex-wrap items-center gap-3">
-                  <h2 className="text-lg font-bold text-slate-850">
+                  <h2 className="text-lg font-bold text-slate-205">
                     {req.menteeId?.fullName || 'Deleted Student'}
                   </h2>
                   <span className={`px-2.5 py-0.5 border rounded-lg text-[10px] font-extrabold uppercase tracking-wider ${
                     req.status === 'Pending' 
-                      ? 'bg-amber-50 border-amber-105 text-amber-700' 
+                      ? 'bg-amber-955 border-amber-800/40 text-amber-400' 
                       : req.status === 'Accepted'
-                      ? 'bg-sky-50 border-sky-105 text-sky-705'
-                      : 'bg-emerald-50 border-emerald-105 text-emerald-700'
+                      ? 'bg-sky-955 border-sky-800/40 text-sky-400'
+                      : 'bg-emerald-955 border-emerald-800/40 text-emerald-400'
                   }`}>
                     {req.status}
                   </span>
@@ -98,17 +98,17 @@ const IncomingRequests = () => {
                 </p>
 
                 {/* Message detail */}
-                <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                <div className="bg-[#111827] border border-slate-800 p-4 rounded-2xl">
+                  <span className="text-[10px] font-bold text-slate-450 uppercase tracking-wider block mb-1">
                     Student message:
                   </span>
-                  <p className="text-sm text-slate-600 font-medium leading-relaxed italic">
+                  <p className="text-sm text-slate-400 font-medium leading-relaxed italic">
                     "{req.requestMessage}"
                   </p>
                 </div>
 
                 {req.status === 'Scheduled' && (
-                  <div className="flex items-center gap-2 text-xs font-bold text-indigo-755 bg-indigo-50/50 border border-indigo-100 px-4 py-2.5 rounded-xl w-fit">
+                  <div className="flex items-center gap-2 text-xs font-bold text-indigo-400 bg-indigo-955 border border-indigo-900/50 px-4 py-2.5 rounded-xl w-fit">
                     <Calendar className="w-4 h-4" />
                     Scheduled on: {formatDate(req.sessionDate)} at {req.sessionTime}
                   </div>
@@ -116,18 +116,18 @@ const IncomingRequests = () => {
               </div>
 
               {/* Actions container */}
-              <div className="flex flex-col justify-center shrink-0 min-w-[180px] md:border-l md:border-slate-50 md:pl-6 gap-3">
+              <div className="flex flex-col justify-center shrink-0 min-w-[180px] md:border-l md:border-slate-800 md:pl-6 gap-3">
                 {req.status === 'Pending' && (
                   <>
                     <button
                       onClick={() => handleStatusUpdate(req._id, 'Accepted')}
-                      className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-center shadow-lg shadow-indigo-150 hover:shadow-indigo-250 transition-all text-xs flex items-center justify-center gap-1.5"
+                      className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5"
                     >
                       <Check className="w-4 h-4" /> Accept Request
                     </button>
                     <button
                       onClick={() => handleStatusUpdate(req._id, 'Rejected')}
-                      className="w-full py-3 bg-white hover:bg-slate-50 border border-slate-200 text-slate-550 font-bold rounded-2xl text-center shadow-sm hover:text-rose-600 hover:border-rose-200 transition-all text-xs flex items-center justify-center gap-1.5"
+                      className="w-full py-3 bg-transparent hover:bg-rose-950/20 border border-slate-700 hover:border-rose-900 hover:text-rose-400 text-slate-400 font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <X className="w-4 h-4" /> Decline
                     </button>
@@ -137,7 +137,7 @@ const IncomingRequests = () => {
                 {(req.status === 'Accepted' || req.status === 'Scheduled') && (
                   <Link
                     to={`/schedule/${req._id}`}
-                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-center shadow-lg shadow-emerald-100 hover:shadow-emerald-250 transition-all text-xs flex items-center justify-center gap-1.5"
+                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5"
                   >
                     <Calendar className="w-4 h-4" /> 
                     {req.status === 'Scheduled' ? 'Reschedule Session' : 'Schedule Session'}

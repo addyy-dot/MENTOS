@@ -79,7 +79,6 @@ const EditProfile = () => {
 
     if (result.success) {
       showToast('Profile updated successfully!', 'success');
-      // Redirect to the appropriate dashboard
       navigate(user.role === 'mentor' ? '/mentor-dashboard' : '/mentee-dashboard');
     } else {
       showToast(result.message || 'Failed to update profile.', 'error');
@@ -89,13 +88,13 @@ const EditProfile = () => {
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-100/40 overflow-hidden">
-        {/* Header decoration */}
-        <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-10 text-white">
-          <h1 className="text-2xl font-extrabold">Edit Profile</h1>
-          <p className="text-indigo-100 text-sm mt-1.5 capitalize">
-            Update your {user.role} profile details to show on the platform
+    <div className="max-w-3xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+      <div className="bg-[#1E293B] rounded-xl border border-slate-800 shadow-sm overflow-hidden">
+        {/* Header */}
+        <div className="bg-blue-600 px-8 py-8 text-white">
+          <h1 className="text-2xl font-bold text-white">Edit Profile</h1>
+          <p className="text-blue-100 text-sm mt-1 capitalize">
+            Update your {user.role} profile details
           </p>
         </div>
 
@@ -103,7 +102,7 @@ const EditProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Full Name */}
             <div>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                 <User className="w-4 h-4 text-slate-400" /> Full Name
               </label>
               <input
@@ -111,14 +110,14 @@ const EditProfile = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="John Doe"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 required
               />
             </div>
 
             {/* Branch */}
             <div>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                 <Book className="w-4 h-4 text-slate-400" /> Department / Branch
               </label>
               <input
@@ -126,20 +125,20 @@ const EditProfile = () => {
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
                 placeholder="e.g. Computer Science Engineering"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               />
             </div>
 
             {/* Role specific: Year (Mentee only) */}
             {user.role === 'mentee' && (
               <div>
-                <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                   <Clock className="w-4 h-4 text-slate-400" /> Academic Year
                 </label>
                 <select
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 >
                   <option value="">Select Year</option>
                   <option value="1st Year">1st Year</option>
@@ -154,7 +153,7 @@ const EditProfile = () => {
             {/* Role specific: Availability (Mentor only) */}
             {user.role === 'mentor' && (
               <div>
-                <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                   <Clock className="w-4 h-4 text-slate-400" /> Availability Slots
                 </label>
                 <input
@@ -162,14 +161,14 @@ const EditProfile = () => {
                   value={availability}
                   onChange={(e) => setAvailability(e.target.value)}
                   placeholder="e.g. Sat & Sun (10 AM - 12 PM)"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 />
               </div>
             )}
 
             {/* Skills (Common, comma separated) */}
             <div className="md:col-span-2">
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                 <Tag className="w-4 h-4 text-slate-400" /> Skills (Comma separated)
               </label>
               <input
@@ -177,14 +176,14 @@ const EditProfile = () => {
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
                 placeholder="React.js, Node.js, Python, System Design"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               />
             </div>
 
             {/* Role specific: Target Companies (Mentee only) */}
             {user.role === 'mentee' && (
               <div className="md:col-span-2">
-                <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                   <Briefcase className="w-4 h-4 text-slate-400" /> Target Companies (Comma separated)
                 </label>
                 <input
@@ -192,7 +191,7 @@ const EditProfile = () => {
                   value={targetCompanies}
                   onChange={(e) => setTargetCompanies(e.target.value)}
                   placeholder="Google, Microsoft, Amazon"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 />
               </div>
             )}
@@ -201,7 +200,7 @@ const EditProfile = () => {
             {user.role === 'mentor' && (
               <>
                 <div className="md:col-span-2">
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                     <Award className="w-4 h-4 text-slate-400" /> Companies Cracked / Placed (Comma separated)
                   </label>
                   <input
@@ -209,13 +208,13 @@ const EditProfile = () => {
                     value={companiesCracked}
                     onChange={(e) => setCompaniesCracked(e.target.value)}
                     placeholder="Meta, Netflix, Apple"
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                   />
                 </div>
 
                 {/* Expertise (Mentor only) */}
                 <div className="md:col-span-2">
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                     <Briefcase className="w-4 h-4 text-slate-400" /> Domains of Expertise (Comma separated)
                   </label>
                   <input
@@ -223,7 +222,7 @@ const EditProfile = () => {
                     value={expertise}
                     onChange={(e) => setExpertise(e.target.value)}
                     placeholder="Backend Development, System Design, DSA"
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                   />
                 </div>
               </>
@@ -231,7 +230,7 @@ const EditProfile = () => {
 
             {/* Bio (Common) */}
             <div className="md:col-span-2">
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 pl-0.5">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                 <FileText className="w-4 h-4 text-slate-400" /> Professional Bio
               </label>
               <textarea
@@ -239,23 +238,23 @@ const EditProfile = () => {
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell others about yourself, current projects, placement history, etc."
                 rows="4"
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all resize-none"
               ></textarea>
             </div>
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end pt-4 border-t border-slate-100">
+          <div className="flex justify-end pt-4 border-t border-slate-800">
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-bold rounded-2xl shadow-lg shadow-indigo-100 hover:shadow-indigo-200 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg shadow-sm transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
             >
               {submitting ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <>
-                  <Save className="w-5 h-5" /> Save Changes
+                  <Save className="w-4 h-4" /> Save Changes
                 </>
               )}
             </button>
@@ -267,3 +266,4 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+
