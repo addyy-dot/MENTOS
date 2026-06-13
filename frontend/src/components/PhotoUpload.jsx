@@ -130,7 +130,7 @@ const PhotoUpload = ({ value, onChange, fullName }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 bg-[#111827] border border-slate-800/80 p-5 rounded-2xl">
+    <div className="flex flex-col items-center gap-4 bg-[#111827] border border-slate-800/80 p-5 rounded-2xl w-full max-w-sm mx-auto">
       {/* Current Photo or Initials Preview */}
       <div className="relative group w-28 h-28 rounded-full bg-blue-955 border border-blue-900/30 text-blue-400 flex items-center justify-center font-bold text-3xl uppercase overflow-hidden shadow-md">
         {value ? (

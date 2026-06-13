@@ -82,7 +82,7 @@ const EditProfile = () => {
     setSubmitting(true);
 
     // Parse comma separated values into trimmed arrays
-    const parseCSV = (str) => 
+    const parseCSV = (str) =>
       str ? str.split(',').map(item => item.trim()).filter(Boolean) : [];
 
     const profileData = {
@@ -131,6 +131,18 @@ const EditProfile = () => {
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Profile Photo Upload / Capture */}
+            <div className="md:col-span-2 flex flex-col items-center">
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                <User className="w-4 h-4 text-slate-400" /> Profile Photo
+              </label>
+              <PhotoUpload
+                value={profilePicture}
+                onChange={setProfilePicture}
+                fullName={fullName}
+              />
+            </div>
+
             {/* Full Name */}
             <div>
               <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
@@ -149,7 +161,7 @@ const EditProfile = () => {
             {/* Branch */}
             <div>
               <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                <Book className="w-4 h-4 text-slate-400" /> Department / Branch
+                <Book className="w-4 h-4 text-slate-400" /> Department
               </label>
               <input
                 type="text"
@@ -253,17 +265,7 @@ const EditProfile = () => {
               />
             </div>
 
-            {/* Profile Photo Upload / Capture */}
-            <div className="md:col-span-2">
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                <User className="w-4 h-4 text-slate-400" /> Profile Photo
-              </label>
-              <PhotoUpload
-                value={profilePicture}
-                onChange={setProfilePicture}
-                fullName={fullName}
-              />
-            </div>
+
 
             {/* Role specific: Target Companies (Mentee only) */}
             {user.role === 'mentee' && (
