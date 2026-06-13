@@ -50,6 +50,14 @@ const userSchema = new mongoose.Schema({
     type: String, // e.g. "Mon-Wed: 6pm-8pm, Sat: 10am-2pm"
     default: '',
   },
+  currentCompany: {
+    type: String,
+    default: '',
+  },
+  currentRole: {
+    type: String,
+    default: '',
+  },
   companiesCracked: {
     type: [String], // for mentors
     default: [],

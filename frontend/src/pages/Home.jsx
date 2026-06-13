@@ -6,55 +6,51 @@ const Home = () => {
   const mentors = [
     {
       id: 1,
-      name: 'Aarav Mehta',
-      role: 'Software Engineer II',
-      company: 'Adobe',
-      alumniContext: 'NIT Trichy Alumni',
-      academicDetails: 'B.Tech CSE • 2022 Graduate',
-      experience: '3 Years',
-      sessions: 31,
-      rating: 4.9,
-      skills: ['DSA', 'System Design', 'Placement Prep'],
-      availability: 'Weekends',
+      name: 'Yashwanth Reddy',
+      role: 'Associate Prodduct Manager',
+      company: 'UKG',
+      alumniContext: 'AIT Pune Alumni',
+      academicDetails: 'B.E. Computer Science • 2026 Graduate',
+      experience: '1 Year',
+      sessions: 2,
+      rating: 4.4,
+      skills: ['Product Management', 'Agile & Scrum', 'Software Development Lifecycle (SDLC)', 'Amazon Web Services (AWS)']
     },
     {
       id: 2,
-      name: 'Neha Sharma',
-      role: 'Senior Software Engineer',
-      company: 'Atlassian',
-      alumniContext: 'IIIT Hyderabad Alumni',
-      academicDetails: 'M.Tech CS • 2020 Graduate',
-      experience: '5 Years',
-      sessions: 45,
-      rating: 5.0,
-      skills: ['System Design', 'Java', 'Placement Prep'],
-      availability: 'Mon-Fri Evenings',
+      name: 'Aman Kumar',
+      role: 'Software Developer-I',
+      company: 'Matercard',
+      alumniContext: 'AIT Pune Alumni',
+      academicDetails: 'B.E. Information Technology • 2026 Graduate',
+      experience: '2 Years',
+      sessions: 4,
+      rating: 4.5,
+      skills: ['DSA', 'Java', 'REST APIs', 'React', 'OOP', 'System Design']
     },
     {
       id: 3,
-      name: 'Rohan Das',
-      role: 'Cloud Engineer',
-      company: 'Amazon',
+      name: 'Khushi Shah',
+      role: 'Business Technology Solutions Associate',
+      company: 'ZS Associates',
       alumniContext: 'AIT Pune Alumni',
-      academicDetails: 'B.E. IT • 2023 Graduate',
+      academicDetails: 'B.E. Computer Science • 2025 Graduate',
       experience: '2 Years',
-      sessions: 18,
+      sessions: 7,
       rating: 4.8,
-      skills: ['Cloud Computing', 'AWS', 'Mock Interviews'],
-      availability: 'Saturday & Sunday',
+      skills: ['Python', 'SQL', 'Excel', 'OOP', 'System Design']
     },
     {
       id: 4,
-      name: 'Priya Patel',
-      role: 'MTS-2 Tech Lead',
-      company: 'ServiceNow',
-      alumniContext: 'COEP Pune Alumni',
-      academicDetails: 'B.Tech E&TC • 2021 Graduate',
-      experience: '4 Years',
-      sessions: 37,
-      rating: 4.9,
-      skills: ['Backend Development', 'C++', 'Resume Review'],
-      availability: 'Flexible Schedule',
+      name: 'Abhishek Kumar',
+      role: 'Software Developer-I',
+      company: 'UBS',
+      alumniContext: 'AIT Pune Alumni',
+      academicDetails: 'B.E. Computer Science • 2026 Graduate',
+      experience: '1 Year',
+      sessions: 3,
+      rating: 4.3,
+      skills: ['Backend Development', 'C++', 'Data Structures', 'Operating Systems', 'Git', 'Linux', 'CI/CD']
     }
   ];
 
@@ -142,13 +138,13 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {mentors.map((mentor) => (
               <div
                 key={mentor.id}
-                className="bg-[#1E293B] border border-slate-800/60 rounded-xl p-5 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all duration-200"
+                className="bg-[#1E293B] border border-slate-800/60 rounded-xl p-5 shadow-sm flex flex-col hover:shadow-lg transition-all duration-200"
               >
-                <div>
+                <div className="flex flex-col flex-grow">
                   {/* Avatar & Rating Row */}
                   <div className="flex justify-between items-start mb-4">
                     <div className="w-12 h-12 rounded-2xl bg-blue-955 text-blue-405 border border-blue-900/30 flex items-center justify-center font-bold text-lg">
@@ -200,7 +196,7 @@ const Home = () => {
                   </div>
 
                   {/* 5. Experience & 6. Availability */}
-                  <div className="mt-4 pt-3.5 border-t border-slate-800/80 text-[11px] text-slate-400 space-y-2">
+                  <div className="mt-auto pt-3.5 border-t border-slate-800/80 text-[11px] text-slate-400 space-y-2">
                     <div className="flex justify-between items-center">
                       <span>Experience:</span>
                       <span className="font-bold text-slate-200">{mentor.experience}</span>
@@ -209,17 +205,13 @@ const Home = () => {
                       <span>Sessions Completed:</span>
                       <span className="font-bold text-slate-200">{mentor.sessions}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span>Availability:</span>
-                      <span className="font-bold text-blue-400">{mentor.availability}</span>
-                    </div>
                   </div>
                 </div>
 
                 {/* 8. Request Button */}
                 <Link
                   to="/register"
-                  className="w-full mt-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl text-center transition-all block cursor-pointer"
+                  className="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl text-center transition-all block cursor-pointer"
                 >
                   Request Mentorship
                 </Link>

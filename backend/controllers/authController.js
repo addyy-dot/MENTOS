@@ -17,7 +17,9 @@ const register = async (req, res) => {
       targetCompanies, 
       availability, 
       companiesCracked, 
-      expertise 
+      expertise,
+      currentCompany,
+      currentRole
     } = req.body;
 
     // Validation
@@ -51,6 +53,8 @@ const register = async (req, res) => {
       skills: Array.isArray(skills) ? skills : [],
       targetCompanies: role === 'mentee' && Array.isArray(targetCompanies) ? targetCompanies : [],
       availability: role === 'mentor' ? (availability || '') : '',
+      currentCompany: role === 'mentor' ? (currentCompany || '') : '',
+      currentRole: role === 'mentor' ? (currentRole || '') : '',
       companiesCracked: role === 'mentor' && Array.isArray(companiesCracked) ? companiesCracked : [],
       expertise: role === 'mentor' && Array.isArray(expertise) ? expertise : [],
       rating: 0,
@@ -145,7 +149,9 @@ const editProfile = async (req, res) => {
       skills, 
       targetCompanies, 
       availability, 
-      companiesCracked, 
+      currentCompany,
+      currentRole,
+      companiesCracked,
       expertise 
     } = req.body;
 
@@ -166,6 +172,8 @@ const editProfile = async (req, res) => {
       if (targetCompanies !== undefined) user.targetCompanies = Array.isArray(targetCompanies) ? targetCompanies : [];
     } else if (user.role === 'mentor') {
       if (availability !== undefined) user.availability = availability;
+      if (currentCompany !== undefined) user.currentCompany = currentCompany;
+      if (currentRole !== undefined) user.currentRole = currentRole;
       if (companiesCracked !== undefined) user.companiesCracked = Array.isArray(companiesCracked) ? companiesCracked : [];
       if (expertise !== undefined) user.expertise = Array.isArray(expertise) ? expertise : [];
     }

@@ -91,8 +91,12 @@ const MyRequests = () => {
                 </div>
 
                 <p className="text-xs text-slate-400 font-semibold">
-                  {req.mentorId?.branch} 
-                  {req.mentorId?.companiesCracked?.length > 0 && ` • Placed at ${req.mentorId.companiesCracked.join(', ')}`}
+                  {req.mentorId?.branch}
+                  {(req.mentorId?.currentRole || req.mentorId?.currentCompany) ? (
+                    ` • ${req.mentorId.currentRole || ''} ${req.mentorId.currentCompany ? `@ ${req.mentorId.currentCompany}` : ''}`
+                  ) : (
+                    req.mentorId?.companiesCracked?.length > 0 && ` • Placed at ${req.mentorId.companiesCracked.join(', ')}`
+                  )}
                 </p>
 
                 {/* Message block */}

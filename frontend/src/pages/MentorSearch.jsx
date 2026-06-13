@@ -202,6 +202,11 @@ const MentorSearch = () => {
                             <Link to={`/mentor/${mentor._id}`}>{mentor.fullName}</Link>
                           </h3>
                           <p className="text-xs text-slate-450 font-semibold">{mentor.branch}</p>
+                          {(mentor.currentRole || mentor.currentCompany) && (
+                            <p className="text-xs text-blue-400 font-bold mt-1">
+                              {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="flex items-center gap-1 bg-amber-955 px-2 py-0.5 rounded-lg border border-amber-800/40 text-amber-400 text-xs font-bold">

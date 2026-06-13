@@ -97,6 +97,11 @@ const MentorDashboard = () => {
             </div>
             <h2 className="text-lg font-bold text-white">{user.fullName}</h2>
             <p className="text-xs font-semibold text-slate-400 mt-0.5 capitalize">{user.role}</p>
+            {(user.currentRole || user.currentCompany) && (
+              <p className="text-xs font-bold text-blue-400 mt-1">
+                {user.currentRole} {user.currentCompany ? `@ ${user.currentCompany}` : ''}
+              </p>
+            )}
 
             <div className="flex items-center gap-1.5 bg-amber-955 px-2.5 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-xs font-bold mt-3">
               <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />

@@ -88,6 +88,11 @@ const MentorProfile = () => {
 
             <h1 className="text-xl font-bold text-white">{mentor.fullName}</h1>
             <p className="text-xs font-semibold text-slate-400 mt-1 capitalize">{mentor.role}</p>
+            {(mentor.currentRole || mentor.currentCompany) && (
+              <p className="text-xs font-bold text-blue-400 mt-2">
+                {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
+              </p>
+            )}
 
             <div className="flex items-center justify-center gap-1.5 mt-4">
               <div className="flex items-center gap-1 bg-amber-955 px-3 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-sm font-bold">

@@ -21,6 +21,8 @@ const EditProfile = () => {
 
   // Mentor fields
   const [availability, setAvailability] = useState('');
+  const [currentCompany, setCurrentCompany] = useState('');
+  const [currentRole, setCurrentRole] = useState('');
   const [companiesCracked, setCompaniesCracked] = useState(''); // input as comma separated list
   const [expertise, setExpertise] = useState(''); // input as comma separated list
 
@@ -39,6 +41,8 @@ const EditProfile = () => {
         setTargetCompanies(user.targetCompanies ? user.targetCompanies.join(', ') : '');
       } else if (user.role === 'mentor') {
         setAvailability(user.availability || '');
+        setCurrentCompany(user.currentCompany || '');
+        setCurrentRole(user.currentRole || '');
         setCompaniesCracked(user.companiesCracked ? user.companiesCracked.join(', ') : '');
         setExpertise(user.expertise ? user.expertise.join(', ') : '');
       }
@@ -70,6 +74,8 @@ const EditProfile = () => {
       profileData.targetCompanies = parseCSV(targetCompanies);
     } else if (user.role === 'mentor') {
       profileData.availability = availability;
+      profileData.currentCompany = currentCompany;
+      profileData.currentRole = currentRole;
       profileData.companiesCracked = parseCSV(companiesCracked);
       profileData.expertise = parseCSV(expertise);
     }
@@ -150,20 +156,48 @@ const EditProfile = () => {
               </div>
             )}
 
-            {/* Role specific: Availability (Mentor only) */}
+            {/* Role specific: Mentor Fields */}
             {user.role === 'mentor' && (
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                  <Clock className="w-4 h-4 text-slate-400" /> Availability Slots
-                </label>
-                <input
-                  type="text"
-                  value={availability}
-                  onChange={(e) => setAvailability(e.target.value)}
-                  placeholder="e.g. Sat & Sun (10 AM - 12 PM)"
-                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                />
-              </div>
+              <>
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Clock className="w-4 h-4 text-slate-400" /> Availability Slots
+                  </label>
+                  <input
+                    type="text"
+                    value={availability}
+                    onChange={(e) => setAvailability(e.target.value)}
+                    placeholder="e.g. Sat & Sun (10 AM - 12 PM)"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Briefcase className="w-4 h-4 text-slate-400" /> Current Company
+                  </label>
+                  <input
+                    type="text"
+                    value={currentCompany}
+                    onChange={(e) => setCurrentCompany(e.target.value)}
+                    placeholder="e.g. Google, Microsoft, Amazon"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Award className="w-4 h-4 text-slate-400" /> Current Job Role
+                  </label>
+                  <input
+                    type="text"
+                    value={currentRole}
+                    onChange={(e) => setCurrentRole(e.target.value)}
+                    placeholder="e.g. Software Engineer, Tech Lead"
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  />
+                </div>
+              </>
             )}
 
             {/* Skills (Common, comma separated) */}
