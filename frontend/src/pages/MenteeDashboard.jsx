@@ -58,8 +58,8 @@ const MenteeDashboard = () => {
       {/* Welcome & Search Bar CTA */}
       <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">Student Dashboard</h1>
-          <p className="text-slate-400 font-semibold mt-1">Welcome back, {user.fullName}! Keep track of your placement preparations.</p>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">Welcome back, {user.fullName}!</h1>
+          <p className="text-slate-400 font-semibold mt-1">Find the right mentor and make the most of your mentorship journey.</p>
         </div>
         <Link
           to="/search"
