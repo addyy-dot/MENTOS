@@ -51,6 +51,16 @@ const MenteeDashboard = () => {
     }
   };
 
+  const isProfileComplete = !!(
+    user?.bio &&
+    user?.branch &&
+    user?.year &&
+    user?.skills &&
+    user?.skills.length > 0 &&
+    user?.targetCompanies &&
+    user?.targetCompanies.length > 0
+  );
+
   if (!user) return null;
 
   return (
@@ -150,9 +160,9 @@ const MenteeDashboard = () => {
 
             <Link
               to="/profile/edit"
-              className="block text-center w-full py-2.5 border border-slate-700 hover:border-blue-600 hover:text-blue-500 text-slate-400 text-xs font-bold rounded-xl transition-all"
+              className="block text-center w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition-all duration-200"
             >
-              Update Profile Details
+              {isProfileComplete ? 'Update Profile' : 'Complete Profile'}
             </Link>
           </div>
         </div>

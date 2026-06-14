@@ -116,6 +116,26 @@ const EditProfile = () => {
     }
   };
 
+  const isFormComplete = user?.role === 'mentor'
+    ? !!(
+        (fullName || '').trim() &&
+        (bio || '').trim() &&
+        (availability || '').trim() &&
+        (currentCompany || '').trim() &&
+        (currentRole || '').trim() &&
+        (linkedinProfile || '').trim() &&
+        (companiesCracked || '').trim() &&
+        (expertise || '').trim()
+      )
+    : !!(
+        (fullName || '').trim() &&
+        (bio || '').trim() &&
+        (branch || '').trim() &&
+        (year || '').trim() &&
+        (skills || '').trim() &&
+        (targetCompanies || '').trim()
+      );
+
   if (!user) return null;
 
   return (
@@ -341,7 +361,7 @@ const EditProfile = () => {
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <>
-                  <Save className="w-4 h-4" /> Save Changes
+                  <Save className="w-4 h-4" /> {isFormComplete ? 'Update Profile' : 'Complete Profile'}
                 </>
               )}
             </button>

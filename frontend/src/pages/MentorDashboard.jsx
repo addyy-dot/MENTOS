@@ -50,6 +50,18 @@ const MentorDashboard = () => {
 
   const upcomingSessions = requests.filter(r => r.status === 'Scheduled');
 
+  const isProfileComplete = !!(
+    user?.bio &&
+    user?.availability &&
+    user?.currentCompany &&
+    user?.currentRole &&
+    user?.linkedinProfile &&
+    user?.companiesCracked &&
+    user?.companiesCracked.length > 0 &&
+    user?.expertise &&
+    user?.expertise.length > 0
+  );
+
   if (!user) return null;
 
   return (
@@ -174,9 +186,9 @@ const MentorDashboard = () => {
 
             <Link
               to="/profile/edit"
-              className="block text-center w-full py-2.5 border border-slate-700 hover:border-blue-600 hover:text-blue-500 text-slate-400 text-xs font-bold rounded-xl transition-all"
+              className="block text-center w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition-all duration-200"
             >
-              Update Profile Details
+              {isProfileComplete ? 'Update Profile' : 'Complete Profile'}
             </Link>
           </div>
         </div>
