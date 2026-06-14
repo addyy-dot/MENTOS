@@ -39,6 +39,7 @@ const EditProfile = () => {
   const [year, setYear] = useState('');
   const [targetCompanies, setTargetCompanies] = useState(''); // input as comma separated list
   const [targetSkills, setTargetSkills] = useState(''); // input as comma separated list
+  const [collegeName, setCollegeName] = useState('');
 
   // Mentor fields
   const [availability, setAvailability] = useState('');
@@ -63,6 +64,7 @@ const EditProfile = () => {
         setYear(user.year || '');
         setTargetCompanies(user.targetCompanies ? user.targetCompanies.join(', ') : '');
         setTargetSkills(user.targetSkills ? user.targetSkills.join(', ') : '');
+        setCollegeName(user.collegeName || '');
       } else if (user.role === 'mentor') {
         setAvailability(user.availability || '');
         setCurrentCompany(user.currentCompany || '');
@@ -99,6 +101,7 @@ const EditProfile = () => {
       profileData.year = year;
       profileData.targetCompanies = parseCSV(targetCompanies);
       profileData.targetSkills = parseCSV(targetSkills);
+      profileData.collegeName = collegeName;
     } else if (user.role === 'mentor') {
       profileData.availability = availability;
       profileData.currentCompany = currentCompany;
@@ -121,24 +124,25 @@ const EditProfile = () => {
 
   const isFormComplete = user?.role === 'mentor'
     ? !!(
-        (fullName || '').trim() &&
-        (bio || '').trim() &&
-        (availability || '').trim() &&
-        (currentCompany || '').trim() &&
-        (currentRole || '').trim() &&
-        (linkedinProfile || '').trim() &&
-        (companiesCracked || '').trim() &&
-        (expertise || '').trim()
-      )
+      (fullName || '').trim() &&
+      (bio || '').trim() &&
+      (availability || '').trim() &&
+      (currentCompany || '').trim() &&
+      (currentRole || '').trim() &&
+      (linkedinProfile || '').trim() &&
+      (companiesCracked || '').trim() &&
+      (expertise || '').trim()
+    )
     : !!(
-        (fullName || '').trim() &&
-        (bio || '').trim() &&
-        (branch || '').trim() &&
-        (year || '').trim() &&
-        (skills || '').trim() &&
-        (targetCompanies || '').trim() &&
-        (targetSkills || '').trim()
-      );
+      (fullName || '').trim() &&
+      (bio || '').trim() &&
+      (branch || '').trim() &&
+      (year || '').trim() &&
+      (skills || '').trim() &&
+      (targetCompanies || '').trim() &&
+      (targetSkills || '').trim() &&
+      (collegeName || '').trim()
+    );
 
   if (!user) return null;
 
@@ -176,7 +180,7 @@ const EditProfile = () => {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="John Doe"
+                placeholder="Enter your Name"
                 className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
                 required
               />
@@ -191,30 +195,44 @@ const EditProfile = () => {
                 type="text"
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
-                placeholder="e.g. Computer Science Engineering"
+                placeholder="Enter your Department"
                 className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               />
             </div>
 
-            {/* Role specific: Year (Mentee only) */}
+            {/* Role specific: Year & College (Mentee only) */}
             {user.role === 'mentee' && (
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                  <Clock className="w-4 h-4 text-slate-400" /> Academic Year
-                </label>
-                <select
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                >
-                  <option value="">Select Year</option>
-                  <option value="1st Year">1st Year</option>
-                  <option value="2nd Year">2nd Year</option>
-                  <option value="3rd Year">3rd Year</option>
-                  <option value="4th Year">4th Year</option>
-                  <option value="Alumni">Alumni</option>
-                </select>
-              </div>
+              <>
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Clock className="w-4 h-4 text-slate-400" /> Academic Year
+                  </label>
+                  <select
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  >
+                    <option value="">Select Year</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                    <option value="Alumni">Alumni</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                    <Book className="w-4 h-4 text-slate-400" /> College Name
+                  </label>
+                  <input
+                    type="text"
+                    value={collegeName}
+                    onChange={(e) => setCollegeName(e.target.value)}
+                    placeholder="Enter your College name "
+                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                  />
+                </div>
+              </>
             )}
 
             {/* Role specific: Mentor Fields */}

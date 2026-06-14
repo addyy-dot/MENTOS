@@ -60,7 +60,8 @@ const MenteeDashboard = () => {
     user?.targetCompanies &&
     user?.targetCompanies.length > 0 &&
     user?.targetSkills &&
-    user?.targetSkills.length > 0
+    user?.targetSkills.length > 0 &&
+    user?.collegeName
   );
 
   if (!user) return null;
@@ -128,6 +129,11 @@ const MenteeDashboard = () => {
               <span className="text-sm font-semibold text-slate-300 block mt-1">
                 {user.branch || 'Branch unspecified'} • {user.year || 'Year unspecified'}
               </span>
+              {user.collegeName && (
+                <span className="text-xs font-semibold text-slate-400 block mt-1">
+                  {user.collegeName}
+                </span>
+              )}
             </div>
 
             <div>

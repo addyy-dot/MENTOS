@@ -21,7 +21,8 @@ const register = async (req, res) => {
       currentCompany,
       currentRole,
       linkedinProfile,
-      targetSkills
+      targetSkills,
+      collegeName
     } = req.body;
 
     // Validation
@@ -61,6 +62,7 @@ const register = async (req, res) => {
       skills: Array.isArray(skills) ? skills : [],
       targetCompanies: role === 'mentee' && Array.isArray(targetCompanies) ? targetCompanies : [],
       targetSkills: role === 'mentee' && Array.isArray(targetSkills) ? targetSkills : [],
+      collegeName: role === 'mentee' ? (collegeName || '') : '',
       availability: role === 'mentor' ? (availability || '') : '',
       currentCompany: role === 'mentor' ? (currentCompany || '') : '',
       currentRole: role === 'mentor' ? (currentRole || '') : '',
@@ -167,7 +169,8 @@ const editProfile = async (req, res) => {
       expertise,
       linkedinProfile,
       profilePicture,
-      targetSkills
+      targetSkills,
+      collegeName
     } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -187,6 +190,7 @@ const editProfile = async (req, res) => {
       if (year !== undefined) user.year = year;
       if (targetCompanies !== undefined) user.targetCompanies = Array.isArray(targetCompanies) ? targetCompanies : [];
       if (targetSkills !== undefined) user.targetSkills = Array.isArray(targetSkills) ? targetSkills : [];
+      if (collegeName !== undefined) user.collegeName = collegeName;
     } else if (user.role === 'mentor') {
       if (availability !== undefined) user.availability = availability;
       if (currentCompany !== undefined) user.currentCompany = currentCompany;

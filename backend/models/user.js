@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  collegeName: {
+    type: String,
+    default: '',
+  },
   availability: {
     type: String, // e.g. "Mon-Wed: 6pm-8pm, Sat: 10am-2pm"
     default: '',
