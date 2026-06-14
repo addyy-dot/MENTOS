@@ -57,6 +57,8 @@ const MenteeDashboard = () => {
     user?.year &&
     user?.skills &&
     user?.skills.length > 0 &&
+    user?.targetRole &&
+    user?.targetRole.length > 0 &&
     user?.targetCompanies &&
     user?.targetCompanies.length > 0 &&
     user?.targetSkills &&
@@ -164,6 +166,21 @@ const MenteeDashboard = () => {
                   ))
                 ) : (
                   <span className="text-xs italic text-slate-400">No target skills listed</span>
+                )}
+              </div>
+            </div>
+
+             <div>
+              <span className="block text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">Target Roles</span>
+              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                {user.targetRole && user.targetRole.length > 0 ? (
+                  user.targetRole.map((role, idx) => (
+                    <span key={idx} className="px-2 py-0.5 bg-violet-950 border border-violet-900 text-violet-400 text-xs font-semibold rounded-lg">
+                      {role}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs italic text-slate-400">No target roles listed</span>
                 )}
               </div>
             </div>

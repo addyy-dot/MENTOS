@@ -40,6 +40,7 @@ const EditProfile = () => {
   const [targetCompanies, setTargetCompanies] = useState(''); // input as comma separated list
   const [targetSkills, setTargetSkills] = useState(''); // input as comma separated list
   const [collegeName, setCollegeName] = useState('');
+  const [targetRole, setTargetRole] = useState('');
 
   // Mentor fields
   const [availability, setAvailability] = useState('');
@@ -59,12 +60,13 @@ const EditProfile = () => {
       setBranch(user.branch || '');
       setSkills(user.skills ? user.skills.join(', ') : '');
       setProfilePicture(user.profilePicture || '');
+      setCollegeName(user.collegeName || '');
 
       if (user.role === 'mentee') {
         setYear(user.year || '');
         setTargetCompanies(user.targetCompanies ? user.targetCompanies.join(', ') : '');
         setTargetSkills(user.targetSkills ? user.targetSkills.join(', ') : '');
-        setCollegeName(user.collegeName || '');
+        setTargetRole(user.targetRole ? user.targetRole.join(', ') : '');
       } else if (user.role === 'mentor') {
         setAvailability(user.availability || '');
         setCurrentCompany(user.currentCompany || '');
@@ -95,13 +97,14 @@ const EditProfile = () => {
       branch,
       skills: parseCSV(skills),
       profilePicture,
+      collegeName,
     };
 
     if (user.role === 'mentee') {
       profileData.year = year;
       profileData.targetCompanies = parseCSV(targetCompanies);
       profileData.targetSkills = parseCSV(targetSkills);
-      profileData.collegeName = collegeName;
+      profileData.targetRole = parseCSV(targetRole);
     } else if (user.role === 'mentor') {
       profileData.availability = availability;
       profileData.currentCompany = currentCompany;
@@ -126,12 +129,12 @@ const EditProfile = () => {
     ? !!(
       (fullName || '').trim() &&
       (bio || '').trim() &&
-      (availability || '').trim() &&
       (currentCompany || '').trim() &&
       (currentRole || '').trim() &&
       (linkedinProfile || '').trim() &&
       (companiesCracked || '').trim() &&
-      (expertise || '').trim()
+      (expertise || '').trim() &&
+      (collegeName || '').trim()
     )
     : !!(
       (fullName || '').trim() &&
@@ -139,6 +142,7 @@ const EditProfile = () => {
       (branch || '').trim() &&
       (year || '').trim() &&
       (skills || '').trim() &&
+      (targetRole || '').trim() &&
       (targetCompanies || '').trim() &&
       (targetSkills || '').trim() &&
       (collegeName || '').trim()
@@ -200,57 +204,44 @@ const EditProfile = () => {
               />
             </div>
 
-            {/* Role specific: Year & College (Mentee only) */}
+            {/* College Name */}
+            <div>
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                <Book className="w-4 h-4 text-slate-400" /> College Name
+              </label>
+              <input
+                type="text"
+                value={collegeName}
+                onChange={(e) => setCollegeName(e.target.value)}
+                placeholder="Enter your College name"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              />
+            </div>
+
+            {/* Role specific: Year (Mentee only) */}
             {user.role === 'mentee' && (
-              <>
-                <div>
-                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                    <Clock className="w-4 h-4 text-slate-400" /> Academic Year
-                  </label>
-                  <select
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                  >
-                    <option value="">Select Year</option>
-                    <option value="1st Year">1st Year</option>
-                    <option value="2nd Year">2nd Year</option>
-                    <option value="3rd Year">3rd Year</option>
-                    <option value="4th Year">4th Year</option>
-                    <option value="Alumni">Alumni</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                    <Book className="w-4 h-4 text-slate-400" /> College Name
-                  </label>
-                  <input
-                    type="text"
-                    value={collegeName}
-                    onChange={(e) => setCollegeName(e.target.value)}
-                    placeholder="Enter your College name "
-                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                  />
-                </div>
-              </>
+              <div>
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                  <Clock className="w-4 h-4 text-slate-400" /> Academic Year
+                </label>
+                <select
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                >
+                  <option value="">Select Year</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="Alumni">Alumni</option>
+                </select>
+              </div>
             )}
 
             {/* Role specific: Mentor Fields */}
             {user.role === 'mentor' && (
               <>
-                <div>
-                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                    <Clock className="w-4 h-4 text-slate-400" /> Availability Slots
-                  </label>
-                  <input
-                    type="text"
-                    value={availability}
-                    onChange={(e) => setAvailability(e.target.value)}
-                    placeholder="e.g. Sat & Sun (10 AM - 12 PM)"
-                    className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                  />
-                </div>
-
                 <div>
                   <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
                     <Briefcase className="w-4 h-4 text-slate-400" /> Current Company
@@ -324,6 +315,22 @@ const EditProfile = () => {
             )}
 
 
+
+            {/* Role specific: Target Role (Mentee only) */}
+            {user.role === 'mentee' && (
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                  <Briefcase className="w-4 h-4 text-slate-400" /> Target Roles (Comma separated)
+                </label>
+                <input
+                  type="text"
+                  value={targetRole}
+                  onChange={(e) => setTargetRole(e.target.value)}
+                  placeholder="e.g. Software Engineer, SDE, Product Manager"
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                />
+              </div>
+            )}
 
             {/* Role specific: Target Companies (Mentee only) */}
             {user.role === 'mentee' && (

@@ -92,9 +92,31 @@ const IncomingRequests = () => {
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-400 font-semibold">
-                  {req.menteeId?.branch} • {req.menteeId?.year} 
-                  {req.menteeId?.skills?.length > 0 && ` • Techs: ${req.menteeId.skills.join(', ')}`}
+                <p className="text-xs text-slate-450 font-semibold leading-relaxed">
+                  {req.menteeId?.collegeName && `${req.menteeId.collegeName} • `}
+                  {req.menteeId?.branch} • {req.menteeId?.year}
+                  {req.menteeId?.skills?.length > 0 && (
+                    <>
+                      <span className="block mt-1">
+                        <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Current Skills:</strong> {req.menteeId.skills.join(', ')}
+                      </span>
+                    </>
+                  )}
+                  {req.menteeId?.targetRole && req.menteeId.targetRole.length > 0 && (
+                    <span className="block mt-1">
+                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Roles:</strong> {req.menteeId.targetRole.join(', ')}
+                    </span>
+                  )}
+                  {req.menteeId?.targetCompanies?.length > 0 && (
+                    <span className="block mt-1">
+                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Companies:</strong> {req.menteeId.targetCompanies.join(', ')}
+                    </span>
+                  )}
+                  {req.menteeId?.targetSkills?.length > 0 && (
+                    <span className="block mt-1">
+                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Skills:</strong> {req.menteeId.targetSkills.join(', ')}
+                    </span>
+                  )}
                 </p>
 
                 {/* Message detail */}

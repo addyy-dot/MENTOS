@@ -52,7 +52,6 @@ const MentorDashboard = () => {
 
   const isProfileComplete = !!(
     user?.bio &&
-    user?.availability &&
     user?.currentCompany &&
     user?.currentRole &&
     user?.linkedinProfile &&
@@ -137,6 +136,12 @@ const MentorDashboard = () => {
               </p>
             )}
 
+            {user.collegeName && (
+              <p className="text-xs font-semibold text-slate-400 mt-1">
+                {user.collegeName}
+              </p>
+            )}
+
             <div className="flex items-center gap-1.5 bg-amber-955 px-2.5 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-xs font-bold mt-3">
               <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
               {user.rating ? user.rating.toFixed(1) : '0.0'}
@@ -177,12 +182,7 @@ const MentorDashboard = () => {
               </div>
             </div>
 
-            <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">General Availability</span>
-              <span className="text-xs font-semibold text-slate-300 block mt-1">
-                {user.availability || 'Not configured'}
-              </span>
-            </div>
+
 
             <Link
               to="/profile/edit"
@@ -222,7 +222,9 @@ const MentorDashboard = () => {
                         {session.menteeId?.fullName || 'Deleted Student'}
                       </h4>
                       <p className="text-xs text-slate-400 font-semibold mt-0.5">
+                        {session.menteeId?.collegeName && `${session.menteeId.collegeName} • `}
                         {session.menteeId?.branch} • {session.menteeId?.year}
+                        {session.menteeId?.targetRole && session.menteeId.targetRole.length > 0 && ` • Target: ${session.menteeId.targetRole.join(', ')}`}
                       </p>
                       
                       <div className="mt-2.5 flex flex-wrap gap-2 text-xs font-bold text-slate-400">

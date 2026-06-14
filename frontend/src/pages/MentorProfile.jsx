@@ -133,6 +133,12 @@ const MentorProfile = () => {
               </p>
             )}
 
+            {mentor.collegeName && (
+              <p className="text-xs font-semibold text-slate-400 mt-1">
+                {mentor.collegeName}
+              </p>
+            )}
+
             <div className="flex items-center justify-center gap-1.5 mt-4">
               <div className="flex items-center gap-1 bg-amber-955 px-3 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-sm font-bold">
                 <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
@@ -230,14 +236,7 @@ const MentorProfile = () => {
               </div>
             )}
 
-            {/* Availability */}
-            <div>
-              <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-2">General Availability</h2>
-              <div className="flex items-center gap-2 mt-3.5 text-sm font-semibold text-slate-300 bg-[#111827] border border-slate-800 p-3.5 rounded-2xl">
-                <Calendar className="w-5 h-5 text-blue-400 shrink-0" />
-                <span>{mentor.availability || 'Weekends, evenings on schedule'}</span>
-              </div>
-            </div>
+
           </div>
 
           {/* Request Placement Prep form (only shown to mentees) */}

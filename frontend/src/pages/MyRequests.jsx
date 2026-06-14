@@ -48,7 +48,7 @@ const MyRequests = () => {
       {/* Page Title */}
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold text-white tracking-tight">My Requests</h1>
-        <p className="text-slate-400 font-semibold mt-1">Track the status of placement guidance slots sent to alumni & seniors.</p>
+        <p className="text-slate-400 font-semibold mt-1">Track the status of your mentorship requests and upcoming sessions.</p>
       </div>
 
       {loading ? (

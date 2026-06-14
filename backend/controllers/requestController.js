@@ -62,7 +62,7 @@ const getRequests = async (req, res) => {
         .sort({ createdAt: -1 });
     } else if (role === 'mentor') {
       requests = await Request.find({ mentorId: userId })
-        .populate('menteeId', 'fullName email branch year bio skills targetCompanies')
+        .populate('menteeId', 'fullName email branch year bio skills targetCompanies targetSkills collegeName targetRole')
         .sort({ createdAt: -1 });
     } else {
       return res.status(400).json({ message: 'Invalid role.' });

@@ -22,7 +22,8 @@ const register = async (req, res) => {
       currentRole,
       linkedinProfile,
       targetSkills,
-      collegeName
+      collegeName,
+      targetRole
     } = req.body;
 
     // Validation
@@ -62,7 +63,8 @@ const register = async (req, res) => {
       skills: Array.isArray(skills) ? skills : [],
       targetCompanies: role === 'mentee' && Array.isArray(targetCompanies) ? targetCompanies : [],
       targetSkills: role === 'mentee' && Array.isArray(targetSkills) ? targetSkills : [],
-      collegeName: role === 'mentee' ? (collegeName || '') : '',
+      collegeName: collegeName || '',
+      targetRole: role === 'mentee' && Array.isArray(targetRole) ? targetRole : [],
       availability: role === 'mentor' ? (availability || '') : '',
       currentCompany: role === 'mentor' ? (currentCompany || '') : '',
       currentRole: role === 'mentor' ? (currentRole || '') : '',
@@ -170,7 +172,8 @@ const editProfile = async (req, res) => {
       linkedinProfile,
       profilePicture,
       targetSkills,
-      collegeName
+      collegeName,
+      targetRole
     } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -184,13 +187,14 @@ const editProfile = async (req, res) => {
     if (branch !== undefined) user.branch = branch;
     if (skills !== undefined) user.skills = Array.isArray(skills) ? skills : [];
     if (profilePicture !== undefined) user.profilePicture = profilePicture;
+    if (collegeName !== undefined) user.collegeName = collegeName;
 
     // Role-specific fields
     if (user.role === 'mentee') {
       if (year !== undefined) user.year = year;
       if (targetCompanies !== undefined) user.targetCompanies = Array.isArray(targetCompanies) ? targetCompanies : [];
       if (targetSkills !== undefined) user.targetSkills = Array.isArray(targetSkills) ? targetSkills : [];
-      if (collegeName !== undefined) user.collegeName = collegeName;
+      if (targetRole !== undefined) user.targetRole = Array.isArray(targetRole) ? targetRole : [];
     } else if (user.role === 'mentor') {
       if (availability !== undefined) user.availability = availability;
       if (currentCompany !== undefined) user.currentCompany = currentCompany;

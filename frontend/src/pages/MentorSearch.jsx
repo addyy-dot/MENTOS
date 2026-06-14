@@ -271,7 +271,9 @@ const MentorSearch = () => {
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-slate-450 font-semibold mt-0.5">{mentor.branch}</p>
+                          <p className="text-xs text-slate-450 font-semibold mt-0.5">
+                            {mentor.collegeName ? `${mentor.collegeName} • ` : ''}{mentor.branch}
+                          </p>
                           {(mentor.currentRole || mentor.currentCompany) && (
                             <p className="text-xs text-blue-400 font-bold mt-1">
                               {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
