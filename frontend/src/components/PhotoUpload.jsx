@@ -38,6 +38,9 @@ const PhotoUpload = ({ value, onChange, fullName }) => {
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(err => {
+          console.error("Error playing video stream:", err);
+        });
       }
       setIsCameraActive(true);
     } catch (err) {
@@ -291,6 +294,7 @@ const PhotoUpload = ({ value, onChange, fullName }) => {
                 ref={videoRef}
                 autoPlay
                 playsInline
+                muted
                 className="w-full h-full object-cover transform scale-x-[-1]"
               />
             ) : (
@@ -347,13 +351,7 @@ const PhotoUpload = ({ value, onChange, fullName }) => {
             <Upload className="w-3.5 h-3.5" /> Browse Photo
           </button>
 
-          <button
-            type="button"
-            onClick={startCamera}
-            className="px-3 py-1.5 bg-[#1E293B] hover:bg-slate-800 text-slate-200 border border-slate-750 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <Camera className="w-3.5 h-3.5" /> Capture Photo
-          </button>
+
 
           {value && (
             <button

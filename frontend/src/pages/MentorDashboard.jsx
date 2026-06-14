@@ -182,6 +182,21 @@ const MentorDashboard = () => {
               </div>
             </div>
 
+            <div>
+              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Technical Skills</span>
+              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                {user.skills && user.skills.length > 0 ? (
+                  user.skills.map((skill, idx) => (
+                    <span key={idx} className="px-2.5 py-1 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium rounded-lg">
+                      {skill}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs italic text-slate-400">None listed</span>
+                )}
+              </div>
+            </div>
+
 
 
             <Link
