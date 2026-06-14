@@ -38,6 +38,7 @@ const EditProfile = () => {
   // Mentee fields
   const [year, setYear] = useState('');
   const [targetCompanies, setTargetCompanies] = useState(''); // input as comma separated list
+  const [targetSkills, setTargetSkills] = useState(''); // input as comma separated list
 
   // Mentor fields
   const [availability, setAvailability] = useState('');
@@ -61,6 +62,7 @@ const EditProfile = () => {
       if (user.role === 'mentee') {
         setYear(user.year || '');
         setTargetCompanies(user.targetCompanies ? user.targetCompanies.join(', ') : '');
+        setTargetSkills(user.targetSkills ? user.targetSkills.join(', ') : '');
       } else if (user.role === 'mentor') {
         setAvailability(user.availability || '');
         setCurrentCompany(user.currentCompany || '');
@@ -96,6 +98,7 @@ const EditProfile = () => {
     if (user.role === 'mentee') {
       profileData.year = year;
       profileData.targetCompanies = parseCSV(targetCompanies);
+      profileData.targetSkills = parseCSV(targetSkills);
     } else if (user.role === 'mentor') {
       profileData.availability = availability;
       profileData.currentCompany = currentCompany;
@@ -133,7 +136,8 @@ const EditProfile = () => {
         (branch || '').trim() &&
         (year || '').trim() &&
         (skills || '').trim() &&
-        (targetCompanies || '').trim()
+        (targetCompanies || '').trim() &&
+        (targetSkills || '').trim()
       );
 
   if (!user) return null;
@@ -207,7 +211,7 @@ const EditProfile = () => {
                   <option value="1st Year">1st Year</option>
                   <option value="2nd Year">2nd Year</option>
                   <option value="3rd Year">3rd Year</option>
-                  <option value="Final Year">Final Year</option>
+                  <option value="4th Year">4th Year</option>
                   <option value="Alumni">Alumni</option>
                 </select>
               </div>
@@ -274,16 +278,32 @@ const EditProfile = () => {
             {/* Skills (Common, comma separated) */}
             <div className="md:col-span-2">
               <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                <Tag className="w-4 h-4 text-slate-400" /> Skills (Comma separated)
+                <Tag className="w-4 h-4 text-slate-400" /> {user.role === 'mentee' ? 'Current Skills (Comma separated)' : 'Skills (Comma separated)'}
               </label>
               <input
                 type="text"
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
-                placeholder="React.js, Node.js, Python, System Design"
+                placeholder={user.role === 'mentee' ? "e.g. React.js, Python, HTML/CSS" : "React.js, Node.js, Python, System Design"}
                 className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               />
             </div>
+
+            {/* Target Skills (Mentee only) */}
+            {user.role === 'mentee' && (
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                  <Tag className="w-4 h-4 text-slate-400" /> Target Skills (Comma separated)
+                </label>
+                <input
+                  type="text"
+                  value={targetSkills}
+                  onChange={(e) => setTargetSkills(e.target.value)}
+                  placeholder="e.g. Node.js, Kubernetes, Machine Learning"
+                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+                />
+              </div>
+            )}
 
 
 

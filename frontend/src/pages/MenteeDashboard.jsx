@@ -58,7 +58,9 @@ const MenteeDashboard = () => {
     user?.skills &&
     user?.skills.length > 0 &&
     user?.targetCompanies &&
-    user?.targetCompanies.length > 0
+    user?.targetCompanies.length > 0 &&
+    user?.targetSkills &&
+    user?.targetSkills.length > 0
   );
 
   if (!user) return null;
@@ -129,7 +131,7 @@ const MenteeDashboard = () => {
             </div>
 
             <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Skills</span>
+              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Current Skills</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {user.skills && user.skills.length > 0 ? (
                   user.skills.map((skill, idx) => (
@@ -139,6 +141,21 @@ const MenteeDashboard = () => {
                   ))
                 ) : (
                   <span className="text-xs italic text-slate-400">No skills listed</span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Skills</span>
+              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                {user.targetSkills && user.targetSkills.length > 0 ? (
+                  user.targetSkills.map((skill, idx) => (
+                    <span key={idx} className="px-2 py-0.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium rounded-lg">
+                      {skill}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs italic text-slate-400">No target skills listed</span>
                 )}
               </div>
             </div>

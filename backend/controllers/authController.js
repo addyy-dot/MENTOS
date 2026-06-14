@@ -20,7 +20,8 @@ const register = async (req, res) => {
       expertise,
       currentCompany,
       currentRole,
-      linkedinProfile
+      linkedinProfile,
+      targetSkills
     } = req.body;
 
     // Validation
@@ -59,6 +60,7 @@ const register = async (req, res) => {
       bio: bio || '',
       skills: Array.isArray(skills) ? skills : [],
       targetCompanies: role === 'mentee' && Array.isArray(targetCompanies) ? targetCompanies : [],
+      targetSkills: role === 'mentee' && Array.isArray(targetSkills) ? targetSkills : [],
       availability: role === 'mentor' ? (availability || '') : '',
       currentCompany: role === 'mentor' ? (currentCompany || '') : '',
       currentRole: role === 'mentor' ? (currentRole || '') : '',
@@ -164,7 +166,8 @@ const editProfile = async (req, res) => {
       companiesCracked,
       expertise,
       linkedinProfile,
-      profilePicture
+      profilePicture,
+      targetSkills
     } = req.body;
 
     const user = await User.findById(req.user.id);
@@ -183,6 +186,7 @@ const editProfile = async (req, res) => {
     if (user.role === 'mentee') {
       if (year !== undefined) user.year = year;
       if (targetCompanies !== undefined) user.targetCompanies = Array.isArray(targetCompanies) ? targetCompanies : [];
+      if (targetSkills !== undefined) user.targetSkills = Array.isArray(targetSkills) ? targetSkills : [];
     } else if (user.role === 'mentor') {
       if (availability !== undefined) user.availability = availability;
       if (currentCompany !== undefined) user.currentCompany = currentCompany;

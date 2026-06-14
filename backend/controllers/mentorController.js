@@ -27,9 +27,14 @@ const getMentors = async (req, res) => {
 
     // Filter by specific skill
     if (skill) {
-      conditions.push({
-        skills: { $regex: skill, $options: 'i' }
-      });
+      const skillQueries = skill.split(',').map(s => s.trim()).filter(Boolean);
+      if (skillQueries.length > 0) {
+        conditions.push({
+          skills: { 
+            $in: skillQueries.map(s => new RegExp(s, 'i')) 
+          }
+        });
+      }
     }
 
     // Filter by company (either cracked or currently working at)
