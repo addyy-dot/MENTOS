@@ -117,15 +117,17 @@ const MenteeDashboard = () => {
             <h2 className="text-lg font-bold text-white">{user.fullName}</h2>
             <p className="text-xs font-semibold text-slate-400 capitalize mt-0.5">{user.role}</p>
             {user.bio ? (
-              <p className="text-xs text-slate-400 mt-3 font-medium line-clamp-3 leading-relaxed px-2">"{user.bio}"</p>
+              <div className="bg-[#111827]/50 border border-slate-800/80 text-slate-200 text-xs italic rounded-2xl px-4.5 py-3 mt-4 max-w-full text-center shadow-inner leading-relaxed font-medium">
+                "{user.bio}"
+              </div>
             ) : (
               <p className="text-xs italic text-slate-400 mt-3">No bio added. Update your profile to add one.</p>
             )}
           </div>
 
           <div className="pt-6 space-y-4">
-            <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Academic Info</span>
+             <div>
+              <span className="block text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">Academic Info</span>
               <span className="text-sm font-semibold text-slate-300 block mt-1">
                 {user.branch || 'Branch unspecified'} • {user.year || 'Year unspecified'}
               </span>
@@ -136,12 +138,12 @@ const MenteeDashboard = () => {
               )}
             </div>
 
-            <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Current Skills</span>
+             <div>
+              <span className="block text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">Current Skills</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {user.skills && user.skills.length > 0 ? (
                   user.skills.map((skill, idx) => (
-                    <span key={idx} className="px-2 py-0.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium rounded-lg">
+                    <span key={idx} className="px-2.5 py-0.5 bg-indigo-950/40 border border-indigo-800/40 text-indigo-400 text-xs font-semibold rounded-lg">
                       {skill}
                     </span>
                   ))
@@ -151,12 +153,12 @@ const MenteeDashboard = () => {
               </div>
             </div>
 
-            <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Skills</span>
+             <div>
+              <span className="block text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">Target Skills</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {user.targetSkills && user.targetSkills.length > 0 ? (
                   user.targetSkills.map((skill, idx) => (
-                    <span key={idx} className="px-2 py-0.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium rounded-lg">
+                    <span key={idx} className="px-2.5 py-0.5 bg-rose-950/40 border border-rose-800/40 text-rose-400 text-xs font-semibold rounded-lg">
                       {skill}
                     </span>
                   ))
@@ -166,8 +168,8 @@ const MenteeDashboard = () => {
               </div>
             </div>
 
-            <div>
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Companies</span>
+             <div>
+              <span className="block text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">Target Companies</span>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {user.targetCompanies && user.targetCompanies.length > 0 ? (
                   user.targetCompanies.map((company, idx) => (
