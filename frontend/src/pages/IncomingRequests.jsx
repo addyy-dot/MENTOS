@@ -30,10 +30,26 @@ const IncomingRequests = () => {
     fetchIncomingRequests();
   }, []);
 
-  const handleStatusUpdate = async (requestId, newStatus) => {
-    const confirmationMsg = `Are you sure you want to mark this request as ${newStatus}?`;
-    if (!window.confirm(confirmationMsg)) return;
+  const [confirmState, setConfirmState] = useState({ id: null, status: null });
+  const [confirmTimeout, setConfirmTimeout] = useState(null);
 
+  const handleStatusUpdate = (requestId, newStatus) => {
+    if (confirmState.id === requestId && confirmState.status === newStatus) {
+      if (confirmTimeout) clearTimeout(confirmTimeout);
+      setConfirmState({ id: null, status: null });
+      performStatusUpdate(requestId, newStatus);
+    } else {
+      if (confirmTimeout) clearTimeout(confirmTimeout);
+      setConfirmState({ id: requestId, status: newStatus });
+      
+      const timeout = setTimeout(() => {
+        setConfirmState({ id: null, status: null });
+      }, 4000);
+      setConfirmTimeout(timeout);
+    }
+  };
+
+  const performStatusUpdate = async (requestId, newStatus) => {
     try {
       await api.patch(`/api/requests/${requestId}/status`, { status: newStatus });
       showToast(`Request was ${newStatus.toLowerCase()} successfully.`, 'success');
@@ -188,15 +204,29 @@ const IncomingRequests = () => {
                   <>
                     <button
                       onClick={() => handleStatusUpdate(req._id, 'Accepted')}
-                      className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5"
+                      className={`w-full py-3 font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5 cursor-pointer ${
+                        confirmState.id === req._id && confirmState.status === 'Accepted'
+                          ? 'bg-emerald-600 hover:bg-emerald-700 text-white animate-pulse'
+                          : 'bg-blue-600 hover:bg-blue-700 text-white'
+                      }`}
                     >
-                      <Check className="w-4 h-4" /> Accept Request
+                      <Check className="w-4 h-4" />
+                      {confirmState.id === req._id && confirmState.status === 'Accepted'
+                        ? 'Confirm Accept?'
+                        : 'Accept Request'}
                     </button>
                     <button
                       onClick={() => handleStatusUpdate(req._id, 'Rejected')}
-                      className="w-full py-3 bg-transparent hover:bg-rose-950/20 border border-slate-700 hover:border-rose-900 hover:text-rose-400 text-slate-400 font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                      className={`w-full py-3 border font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-1.5 cursor-pointer ${
+                        confirmState.id === req._id && confirmState.status === 'Rejected'
+                          ? 'bg-rose-600 hover:bg-rose-700 border-rose-600 text-white animate-pulse'
+                          : 'bg-transparent hover:bg-rose-950/20 border-slate-700 hover:border-rose-900 hover:text-rose-400 text-slate-400'
+                      }`}
                     >
-                      <X className="w-4 h-4" /> Decline
+                      <X className="w-4 h-4" />
+                      {confirmState.id === req._id && confirmState.status === 'Rejected'
+                        ? 'Confirm Decline?'
+                        : 'Decline'}
                     </button>
                   </>
                 )}

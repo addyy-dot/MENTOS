@@ -273,14 +273,14 @@ const MentorDashboard = () => {
 
                     {/* Actions */}
                     <div className="flex gap-2 w-full sm:w-auto">
-                      {session.googleMeetLink && (
+                      {(session.meetingLink || session.googleMeetLink) && (
                         <a
-                          href={session.googleMeetLink.startsWith('http') ? session.googleMeetLink : `https://${session.googleMeetLink}`}
+                          href={(session.meetingLink || session.googleMeetLink).startsWith('http') ? (session.meetingLink || session.googleMeetLink) : `https://${session.meetingLink || session.googleMeetLink}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex-grow sm:flex-none px-4 py-2 bg-emerald-950/40 hover:bg-emerald-600 border border-emerald-800/40 hover:border-emerald-600 text-emerald-400 hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5"
                         >
-                          <Video className="w-3.5 h-3.5" /> Join Meet
+                          <Video className="w-3.5 h-3.5" /> Join {session.meetingPlatform || 'Google Meet'}
                         </a>
                       )}
                       

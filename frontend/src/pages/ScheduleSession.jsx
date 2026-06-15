@@ -11,7 +11,8 @@ const ScheduleSession = () => {
 
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
-  const [googleMeetLink, setGoogleMeetLink] = useState('');
+  const [meetingPlatform, setMeetingPlatform] = useState('Google Meet');
+  const [meetingLink, setMeetingLink] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [requestDetail, setRequestDetail] = useState(null);
@@ -33,7 +34,8 @@ const ScheduleSession = () => {
         if (found.status === 'Scheduled') {
           setSessionDate(found.sessionDate || '');
           setSessionTime(found.sessionTime || '');
-          setGoogleMeetLink(found.googleMeetLink || '');
+          setMeetingPlatform(found.meetingPlatform || 'Google Meet');
+          setMeetingLink(found.meetingLink || found.googleMeetLink || '');
         }
       } catch (error) {
         console.error('Error fetching request details:', error);
@@ -49,14 +51,14 @@ const ScheduleSession = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!sessionDate || !sessionTime || !googleMeetLink) {
+    if (!sessionDate || !sessionTime || !meetingLink) {
       showToast('Please fill in all scheduling fields.', 'error');
       return;
     }
 
-    // Google Meet validation: must have some sanity
-    if (!googleMeetLink.includes('meet.google.com') && !googleMeetLink.startsWith('http')) {
-      showToast('Please provide a valid URL or Google Meet link.', 'warning');
+    // Link validation: check if it has protocol
+    if (!meetingLink.startsWith('http://') && !meetingLink.startsWith('https://')) {
+      showToast('Please provide a valid URL starting with http:// or https://', 'warning');
     }
 
     // Simple past date validation
@@ -70,7 +72,8 @@ const ScheduleSession = () => {
       await api.patch(`/api/requests/${requestId}/schedule`, {
         sessionDate,
         sessionTime,
-        googleMeetLink,
+        meetingPlatform,
+        meetingLink,
       });
 
       showToast('Mentorship session has been scheduled successfully!', 'success');
@@ -110,7 +113,7 @@ const ScheduleSession = () => {
             {requestDetail?.status === 'Scheduled' ? 'Reschedule Session' : 'Schedule Mentorship Session'}
           </h2>
           <p className="text-xs text-slate-400 font-semibold mt-1">
-            Set the date, time, and provide your Google Meet invite details for{' '}
+            Set the date, time, and provide your meeting invite details for{' '}
             <strong className="text-white">{requestDetail?.menteeId?.fullName}</strong>.
           </p>
         </div>
@@ -156,17 +159,36 @@ const ScheduleSession = () => {
             </div>
           </div>
 
-          {/* Google Meet Link */}
+          {/* Meeting Platform */}
           <div>
             <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
-              <Video className="w-4 h-4 text-slate-500" /> Google Meet Link
+              <Video className="w-4 h-4 text-slate-500" /> Meeting Platform
+            </label>
+            <select
+              value={meetingPlatform}
+              onChange={(e) => setMeetingPlatform(e.target.value)}
+              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              required
+            >
+              <option value="Google Meet">Google Meet</option>
+              <option value="Microsoft Teams">Microsoft Teams</option>
+              <option value="Zoom">Zoom</option>
+              <option value="Discord">Discord</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {/* Meeting Link */}
+          <div>
+            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pl-0.5">
+              <Video className="w-4 h-4 text-slate-500" /> Meeting Link
             </label>
             <input
               type="text"
-              value={googleMeetLink}
-              onChange={(e) => setGoogleMeetLink(e.target.value)}
-              placeholder="e.g. https://meet.google.com/abc-defg-hij"
-              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-205 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              value={meetingLink}
+              onChange={(e) => setMeetingLink(e.target.value)}
+              placeholder="e.g. https://zoom.us/j/..., https://meet.google.com/..."
+              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               required
             />
           </div>

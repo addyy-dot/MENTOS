@@ -36,6 +36,18 @@ const requestSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  meetingPlatform: {
+    type: String,
+    enum: {
+      values: ['Google Meet', 'Microsoft Teams', 'Zoom', 'Discord', 'Other'],
+      message: '{VALUE} is not a valid meeting platform',
+    },
+    default: 'Google Meet',
+  },
+  meetingLink: {
+    type: String,
+    default: '',
+  },
 }, {
   timestamps: true,
 });

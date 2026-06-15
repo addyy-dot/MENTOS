@@ -138,13 +138,16 @@ const updateRequestStatus = async (req, res) => {
 // Schedule Session (Mentor only)
 const scheduleRequest = async (req, res) => {
   try {
-    const { sessionDate, sessionTime, googleMeetLink } = req.body;
+    const { sessionDate, sessionTime, meetingPlatform, meetingLink } = req.body;
     const requestId = req.params.id;
     const mentorId = req.user.id;
 
-    if (!sessionDate || !sessionTime || !googleMeetLink) {
+    const finalLink = meetingLink || req.body.googleMeetLink;
+    const finalPlatform = meetingPlatform || 'Google Meet';
+
+    if (!sessionDate || !sessionTime || !finalLink) {
       return res.status(400).json({ 
-        message: 'Session date, time, and Google Meet link are required to schedule.' 
+        message: 'Session date, time, and meeting link are required to schedule.' 
       });
     }
 
@@ -169,7 +172,9 @@ const scheduleRequest = async (req, res) => {
     // Update session info and status to Scheduled
     request.sessionDate = sessionDate;
     request.sessionTime = sessionTime;
-    request.googleMeetLink = googleMeetLink;
+    request.meetingPlatform = finalPlatform;
+    request.meetingLink = finalLink;
+    request.googleMeetLink = finalLink; // backward compatibility
     request.status = 'Scheduled';
 
     await request.save();

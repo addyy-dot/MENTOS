@@ -122,14 +122,14 @@ const MyRequests = () => {
 
               {/* Action Side */}
               <div className="flex flex-col justify-center shrink-0 min-w-[160px] md:border-l md:border-slate-800 md:pl-6 gap-3">
-                {req.status === 'Scheduled' && req.googleMeetLink && (
+                {req.status === 'Scheduled' && (req.meetingLink || req.googleMeetLink) && (
                   <a
-                    href={req.googleMeetLink.startsWith('http') ? req.googleMeetLink : `https://${req.googleMeetLink}`}
+                    href={(req.meetingLink || req.googleMeetLink).startsWith('http') ? (req.meetingLink || req.googleMeetLink) : `https://${req.meetingLink || req.googleMeetLink}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-center transition-all text-xs flex items-center justify-center gap-2"
                   >
-                    <Video className="w-4.5 h-4.5" /> Join Meet
+                    <Video className="w-4.5 h-4.5" /> Join {req.meetingPlatform || 'Google Meet'}
                   </a>
                 )}
 
