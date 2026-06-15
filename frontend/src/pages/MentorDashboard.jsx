@@ -13,6 +13,8 @@ const MentorDashboard = () => {
   const { showToast } = useToast();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [confirmCompleteId, setConfirmCompleteId] = useState(null);
+  const [confirmTimeout, setConfirmTimeout] = useState(null);
 
   const fetchRequests = async () => {
     try {
@@ -30,9 +32,23 @@ const MentorDashboard = () => {
     fetchRequests();
   }, []);
 
-  const handleMarkComplete = async (requestId) => {
-    if (!window.confirm('Are you sure you want to mark this mentorship session as completed?')) return;
+  const handleMarkComplete = (requestId) => {
+    if (confirmCompleteId === requestId) {
+      if (confirmTimeout) clearTimeout(confirmTimeout);
+      setConfirmCompleteId(null);
+      performMarkComplete(requestId);
+    } else {
+      if (confirmTimeout) clearTimeout(confirmTimeout);
+      setConfirmCompleteId(requestId);
+      
+      const timeout = setTimeout(() => {
+        setConfirmCompleteId(null);
+      }, 4000);
+      setConfirmTimeout(timeout);
+    }
+  };
 
+  const performMarkComplete = async (requestId) => {
     try {
       await api.patch(`/api/requests/${requestId}/status`, { status: 'Completed' });
       showToast('Session marked as completed successfully.', 'success');
@@ -251,15 +267,25 @@ const MentorDashboard = () => {
                     key={session._id}
                     className="p-5 border border-slate-800 rounded-3xl hover:border-slate-700 transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
                   >
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-bold text-slate-205">
                         {session.menteeId?.fullName || 'Deleted Student'}
                       </h4>
                       <p className="text-xs text-slate-400 font-semibold mt-0.5">
                         {session.menteeId?.collegeName && `${session.menteeId.collegeName} • `}
                         {session.menteeId?.branch} • {session.menteeId?.year}
-                        {session.menteeId?.targetRole && session.menteeId.targetRole.length > 0 && ` • Target: ${session.menteeId.targetRole.join(', ')}`}
                       </p>
+                      
+                      {session.menteeId?.targetRole && session.menteeId.targetRole.length > 0 && (
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Target:</span>
+                          {session.menteeId.targetRole.map((role, rIdx) => (
+                            <span key={rIdx} className="px-2 py-0.5 bg-violet-950/40 border border-violet-900/30 text-violet-400 text-[10px] font-semibold rounded-md">
+                              {role}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                       
                       <div className="mt-2.5 flex flex-wrap gap-2 text-xs font-bold text-slate-400">
                         <span className="px-2.5 py-1 bg-blue-955 text-blue-400 rounded-lg">
@@ -286,9 +312,13 @@ const MentorDashboard = () => {
                       
                       <button
                         onClick={() => handleMarkComplete(session._id)}
-                        className="flex-grow sm:flex-none px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1"
+                        className={`flex-grow sm:flex-none px-4 py-2 text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1 cursor-pointer ${
+                          confirmCompleteId === session._id
+                            ? 'bg-amber-600 hover:bg-amber-700 text-white animate-pulse'
+                            : 'bg-blue-600 hover:bg-blue-700 text-white'
+                        }`}
                       >
-                        Complete
+                        {confirmCompleteId === session._id ? 'Confirm Complete?' : 'Complete'}
                       </button>
                     </div>
                   </div>
