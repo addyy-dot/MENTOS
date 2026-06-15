@@ -87,6 +87,21 @@ const ScheduleSession = () => {
     }
   };
 
+  const getPlaceholder = () => {
+    switch (meetingPlatform) {
+      case 'Google Meet':
+        return 'Paste your Google Meet link here (e.g. https://meet.google.com/abc-defg-hij)';
+      case 'Microsoft Teams':
+        return 'Paste your Microsoft Teams meeting link here';
+      case 'Zoom':
+        return 'Paste your Zoom meeting link here (e.g. https://zoom.us/j/1234567890)';
+      case 'Discord':
+        return 'Paste your Discord invite or voice channel link here';
+      default:
+        return 'Paste your meeting link here';
+    }
+  };
+
   if (loading) {
     return (
       <div className="py-24 flex justify-center">
@@ -187,8 +202,8 @@ const ScheduleSession = () => {
               type="text"
               value={meetingLink}
               onChange={(e) => setMeetingLink(e.target.value)}
-              placeholder="e.g. https://zoom.us/j/..., https://meet.google.com/..."
-              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              placeholder={getPlaceholder()}
+              className="w-full px-4 py-3 bg-[#111827] border border-slate-700 rounded-2xl text-sm font-medium text-slate-205 placeholder-slate-550 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
               required
             />
           </div>
