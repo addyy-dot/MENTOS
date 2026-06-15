@@ -272,7 +272,7 @@ const MentorSearch = () => {
                             )}
                           </div>
                           <p className="text-xs text-slate-450 font-semibold mt-0.5">
-                            {mentor.collegeName ? `${mentor.collegeName} • ` : ''}{mentor.branch}
+                            {[mentor.collegeName, mentor.branch, mentor.year].filter(Boolean).join(' • ')}
                           </p>
                           {(mentor.currentRole || mentor.currentCompany) && (
                             <p className="text-xs text-blue-400 font-bold mt-1">

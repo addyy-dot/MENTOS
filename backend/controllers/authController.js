@@ -58,7 +58,7 @@ const register = async (req, res) => {
       passwordHash,
       role,
       branch: branch || '',
-      year: role === 'mentee' ? (year || '') : '', // Year only relevant for mentees
+      year: year || '',
       bio: bio || '',
       skills: Array.isArray(skills) ? skills : [],
       targetCompanies: role === 'mentee' && Array.isArray(targetCompanies) ? targetCompanies : [],
@@ -185,13 +185,13 @@ const editProfile = async (req, res) => {
     if (fullName) user.fullName = fullName;
     if (bio !== undefined) user.bio = bio;
     if (branch !== undefined) user.branch = branch;
+    if (year !== undefined) user.year = year;
     if (skills !== undefined) user.skills = Array.isArray(skills) ? skills : [];
     if (profilePicture !== undefined) user.profilePicture = profilePicture;
     if (collegeName !== undefined) user.collegeName = collegeName;
 
     // Role-specific fields
     if (user.role === 'mentee') {
-      if (year !== undefined) user.year = year;
       if (targetCompanies !== undefined) user.targetCompanies = Array.isArray(targetCompanies) ? targetCompanies : [];
       if (targetSkills !== undefined) user.targetSkills = Array.isArray(targetSkills) ? targetSkills : [];
       if (targetRole !== undefined) user.targetRole = Array.isArray(targetRole) ? targetRole : [];

@@ -95,29 +95,74 @@ const IncomingRequests = () => {
                 <p className="text-xs text-slate-450 font-semibold leading-relaxed">
                   {req.menteeId?.collegeName && `${req.menteeId.collegeName} • `}
                   {req.menteeId?.branch} • {req.menteeId?.year}
-                  {req.menteeId?.skills?.length > 0 && (
-                    <>
-                      <span className="block mt-1">
-                        <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Current Skills:</strong> {req.menteeId.skills.join(', ')}
-                      </span>
-                    </>
-                  )}
-                  {req.menteeId?.targetRole && req.menteeId.targetRole.length > 0 && (
-                    <span className="block mt-1">
-                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Roles:</strong> {req.menteeId.targetRole.join(', ')}
-                    </span>
-                  )}
-                  {req.menteeId?.targetCompanies?.length > 0 && (
-                    <span className="block mt-1">
-                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Companies:</strong> {req.menteeId.targetCompanies.join(', ')}
-                    </span>
-                  )}
-                  {req.menteeId?.targetSkills?.length > 0 && (
-                    <span className="block mt-1">
-                      <strong className="text-slate-400 font-bold uppercase tracking-wide text-[10px]">Target Skills:</strong> {req.menteeId.targetSkills.join(', ')}
-                    </span>
-                  )}
                 </p>
+
+                {/* Structured Profile Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-800">
+                  {/* Current Profile Card */}
+                  <div className="bg-[#111827]/30 border border-slate-800 p-4.5 rounded-2xl space-y-3.5">
+                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-800/50 pb-1.5">Student Info</h3>
+                    {req.menteeId?.skills?.length > 0 ? (
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Current Skills</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {req.menteeId.skills.map((skill, idx) => (
+                            <span key={idx} className="px-2 py-0.5 bg-indigo-950/40 border border-indigo-900/30 text-indigo-400 text-[10px] font-semibold rounded-md">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-xs italic text-slate-500">No skills listed</span>
+                    )}
+                  </div>
+
+                  {/* Target Profile Card */}
+                  <div className="bg-[#111827]/30 border border-slate-800 p-4.5 rounded-2xl space-y-3.5">
+                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-800/50 pb-1.5">Target Career Goal</h3>
+                    <div className="space-y-3">
+                      {req.menteeId?.targetRole?.length > 0 && (
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Target Roles</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {req.menteeId.targetRole.map((role, idx) => (
+                              <span key={idx} className="px-2 py-0.5 bg-violet-950/40 border border-violet-900/30 text-violet-400 text-[10px] font-semibold rounded-md">
+                                {role}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {req.menteeId?.targetCompanies?.length > 0 && (
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Target Companies</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {req.menteeId.targetCompanies.map((company, idx) => (
+                              <span key={idx} className="px-2 py-0.5 bg-emerald-955 border border-emerald-900/30 text-emerald-400 text-[10px] font-semibold rounded-md">
+                                {company}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {req.menteeId?.targetSkills?.length > 0 && (
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Target Skills</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {req.menteeId.targetSkills.map((tskill, idx) => (
+                              <span key={idx} className="px-2 py-0.5 bg-rose-955 border border-rose-900/30 text-rose-400 text-[10px] font-semibold rounded-md">
+                                {tskill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
 
                 {/* Message detail */}
                 <div className="bg-[#111827] border border-slate-800 p-4 rounded-2xl">

@@ -99,57 +99,70 @@ const MentorProfile = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Mentor Overview Sidebar */}
-        <div className="space-y-6">
-          <div className="bg-[#1E293B] border border-slate-800 p-6 rounded-3xl shadow-sm text-center">
-            <div className="w-24 h-24 bg-blue-955 text-blue-400 border border-blue-900/30 rounded-3xl flex items-center justify-center font-bold text-3xl uppercase mx-auto mb-4 shadow-inner overflow-hidden">
-              {mentor.profilePicture ? (
-                <img src={mentor.profilePicture} alt={mentor.fullName} className="w-full h-full object-cover" />
-              ) : (
-                getInitials(mentor.fullName)
-              )}
+        <div className="space-y-5">
+          <div className="bg-[#1E293B] border border-slate-800 p-5 rounded-3xl shadow-sm flex flex-col items-start text-left">
+            {/* Top row: profile pic & rating */}
+            <div className="w-full flex justify-between items-start mb-3.5">
+              <div className="w-16 h-16 bg-blue-955/65 text-blue-400 border border-blue-900/30 rounded-2xl flex items-center justify-center font-bold text-xl uppercase shadow-inner overflow-hidden">
+                {mentor.profilePicture ? (
+                  <img src={mentor.profilePicture} alt={mentor.fullName} className="w-full h-full object-cover" />
+                ) : (
+                  getInitials(mentor.fullName)
+                )}
+              </div>
+              <div className="flex items-center gap-1 bg-amber-955/50 px-2 py-0.5 rounded-lg border border-amber-500/20 text-amber-400 text-xs font-bold mt-1">
+                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                {mentor.rating ? mentor.rating.toFixed(1) : '0.0'}
+              </div>
             </div>
 
-            <h1 className="text-xl font-bold text-white">{mentor.fullName}</h1>
-            <p className="text-xs font-semibold text-slate-400 mt-1 capitalize">{mentor.role}</p>
+            <h1 className="text-lg font-black text-white tracking-tight">{mentor.fullName}</h1>
             
             {/* Verification Badge */}
             {mentor.isVerified ? (
-              <div className="mt-2 flex items-center justify-center gap-1.5 text-emerald-500 text-sm font-bold">
-                <CheckCircle className="w-4 h-4" /> Verified Mentor
+              <div className="mt-0.5 flex items-center gap-1.5 text-emerald-500 text-[11px] font-bold">
+                <CheckCircle className="w-3.5 h-3.5" /> Verified Mentor
               </div>
             ) : mentor.verificationStatus === 'pending' ? (
-              <div className="mt-2 flex items-center justify-center gap-1.5 text-amber-500 text-sm font-bold">
-                <Clock className="w-4 h-4 animate-pulse" /> Verification Pending
+              <div className="mt-0.5 flex items-center gap-1.5 text-amber-500 text-[11px] font-bold">
+                <Clock className="w-3.5 h-3.5 animate-pulse" /> Verification Pending
               </div>
             ) : mentor.verificationStatus === 'rejected' ? (
-              <div className="mt-2 flex items-center justify-center gap-1.5 text-rose-500 text-sm font-bold">
-                <AlertCircle className="w-4 h-4" /> Verification Required
+              <div className="mt-0.5 flex items-center gap-1.5 text-rose-500 text-[11px] font-bold">
+                <AlertCircle className="w-3.5 h-3.5" /> Verification Required
               </div>
             ) : null}
 
+            {/* College & Alumni status */}
+            {(mentor.collegeName || mentor.year) && (
+              <p className="text-xs font-extrabold text-slate-200 mt-3.5 leading-snug">
+                {mentor.collegeName} {mentor.year && mentor.year.toLowerCase() === 'alumni' ? 'Alumni' : ''}
+              </p>
+            )}
+
+            {/* Branch / Department & Graduation Info */}
+            {mentor.branch && (
+              <p className="text-[11px] text-slate-400 mt-0.5 font-semibold leading-relaxed">
+                {mentor.branch} {mentor.year && mentor.year.toLowerCase() !== 'alumni' ? `• ${mentor.year}` : ''}
+              </p>
+            )}
+
+            {/* Current Job Role and Company */}
             {(mentor.currentRole || mentor.currentCompany) && (
-              <p className="text-xs font-bold text-blue-400 mt-2.5">
-                {mentor.currentRole} {mentor.currentCompany ? `@ ${mentor.currentCompany}` : ''}
+              <p className="text-xs font-bold text-blue-400 mt-3 leading-snug">
+                {mentor.currentRole}
+                {mentor.currentCompany ? (
+                  <>
+                    <br />
+                    @ {mentor.currentCompany}
+                  </>
+                ) : ''}
               </p>
             )}
-
-            {mentor.collegeName && (
-              <p className="text-xs font-semibold text-slate-400 mt-1">
-                {mentor.collegeName}
-              </p>
-            )}
-
-            <div className="flex items-center justify-center gap-1.5 mt-4">
-              <div className="flex items-center gap-1 bg-amber-955 px-3 py-1 rounded-xl border border-amber-800/40 text-amber-400 text-sm font-bold">
-                <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                {mentor.rating ? mentor.rating.toFixed(1) : '0.0'}
-              </div>
-              <span className="text-xs font-semibold text-slate-400">Average Rating</span>
-            </div>
 
             {/* Placement Details */}
             {mentor.companiesCracked && mentor.companiesCracked.length > 0 && (
-              <div className="mt-6 pt-6 border-t border-slate-800 text-left">
+              <div className="mt-6 pt-6 border-t border-slate-800 text-left w-full">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-2">
                   Placed Companies
                 </span>

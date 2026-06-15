@@ -58,12 +58,12 @@ const EditProfile = () => {
       setFullName(user.fullName || '');
       setBio(user.bio || '');
       setBranch(user.branch || '');
+      setYear(user.year || '');
       setSkills(user.skills ? user.skills.join(', ') : '');
       setProfilePicture(user.profilePicture || '');
       setCollegeName(user.collegeName || '');
 
       if (user.role === 'mentee') {
-        setYear(user.year || '');
         setTargetCompanies(user.targetCompanies ? user.targetCompanies.join(', ') : '');
         setTargetSkills(user.targetSkills ? user.targetSkills.join(', ') : '');
         setTargetRole(user.targetRole ? user.targetRole.join(', ') : '');
@@ -95,13 +95,13 @@ const EditProfile = () => {
       fullName,
       bio,
       branch,
+      year,
       skills: parseCSV(skills),
       profilePicture,
       collegeName,
     };
 
     if (user.role === 'mentee') {
-      profileData.year = year;
       profileData.targetCompanies = parseCSV(targetCompanies);
       profileData.targetSkills = parseCSV(targetSkills);
       profileData.targetRole = parseCSV(targetRole);
@@ -218,26 +218,19 @@ const EditProfile = () => {
               />
             </div>
 
-            {/* Role specific: Year (Mentee only) */}
-            {user.role === 'mentee' && (
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
-                  <Clock className="w-4 h-4 text-slate-400" /> Academic Year
-                </label>
-                <select
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
-                >
-                  <option value="">Select Year</option>
-                  <option value="1st Year">1st Year</option>
-                  <option value="2nd Year">2nd Year</option>
-                  <option value="3rd Year">3rd Year</option>
-                  <option value="4th Year">4th Year</option>
-                  <option value="Alumni">Alumni</option>
-                </select>
-              </div>
-            )}
+            {/* Academic Year */}
+            <div>
+              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-0.5">
+                <Clock className="w-4 h-4 text-slate-400" /> Academic / Graduation Year
+              </label>
+              <input
+                type="text"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                placeholder="e.g. Alumni, 2026 Graduate, 4th Year"
+                className="w-full px-4 py-2 bg-[#111827] border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:bg-[#111827] transition-all"
+              />
+            </div>
 
             {/* Role specific: Mentor Fields */}
             {user.role === 'mentor' && (
